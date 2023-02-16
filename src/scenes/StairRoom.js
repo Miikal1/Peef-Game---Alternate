@@ -106,10 +106,15 @@ class StairRoom extends Phaser.Scene {
         this.stairPillarFive.body.allowGravity = false;
         this.platforms.add(this.stairPillarFive);
 
-        this.stairStepEight = this.physics.add.sprite(512, 62, 'stairStep');
+        this.stairStepEight = this.physics.add.sprite(512, 68, 'stairStep');
         this.stairStepEight.body.immovable = true;
         this.stairStepEight.body.allowGravity = false;
         this.platforms.add(this.stairStepEight);
+
+        this.stairPillarSix = this.physics.add.sprite(470, 36, 'stairPillarThick');
+        this.stairPillarSix.body.immovable = true;
+        this.stairPillarSix.body.allowGravity = false;
+        this.platforms.add(this.stairPillarSix);
 
         this.needleTwo = this.physics.add.sprite(592, 130, 'needle');
 

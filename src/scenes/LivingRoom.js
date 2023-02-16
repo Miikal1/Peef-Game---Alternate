@@ -94,7 +94,7 @@ class LivingRoom extends Phaser.Scene {
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
 
-        this.talkOnce = false;
+        this.talking = false;
 
         this.anims.create({
             key: 'walk',
@@ -114,12 +114,12 @@ class LivingRoom extends Phaser.Scene {
 
     update(){
 
-        if(this.keyA.isDown) {
+        if(this.keyA.isDown && this.talking == false) {
             this.p1.setVelocityX(-200);
             this.p1.setFlip(true, false);
             this.p1.anims.play('walk', true);
         }
-        else if(this.keyD.isDown) {
+        else if(this.keyD.isDown && this.talking == false) {
             this.p1.setVelocityX(200);
             this.p1.resetFlip();
             this.p1.anims.play('walk', true);
@@ -129,7 +129,7 @@ class LivingRoom extends Phaser.Scene {
             this.p1.anims.play('idle', true);
         }
     
-        if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+        if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {
             this.p1.body.setVelocityY(-500);
         }
 
@@ -167,21 +167,47 @@ class LivingRoom extends Phaser.Scene {
         }   
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){
-            console.log(this.has("spool"));
-            console.log(this.has("needleOne"));
-            console.log(this.has("needleTwo"));
+            console.log(this.talking);
+            
         }   
-
-        //if (Phaser.Input.Keyboard.JustDown(this.keyG)){
-        //    console.log(this.has("hammer"));
-        //    console.log(this.registry('hammer'));
-        //}
 
         //if (Phaser.Input.Keyboard.JustDown(this.keyV)){
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && (this.has("spool") && this.has("needleOne") && this.has("needleTwo")) && this.keyT.isDown) {
+        if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
+                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
+                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
+                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
+                }
+                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
+                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
+                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                }
+            }
+
+            if (this.keyA.isDown || this.keyD.isDown) {
+                this.p1.setVelocityX(0);
+            }
+            if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+                this.p1.body.setVelocityY(0);
+            }
+
+            
+        }
+
+        if (this.talking == false){
+            this.line1.setText('');
+            this.line2.setText('');
+         }
+
+
+        /*if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && (this.has("spool") && this.has("needleOne") && this.has("needleTwo")) && this.keyT.isDown) {
             console.log("spool: " + this.has("spool") + " needleOne: " + this.has("needleOne") + " needleTwo: " + this.has("needleTwo"));
             this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
             this.line2.setText('Peef: Glad to help. I know how painful rips are.');
@@ -194,7 +220,7 @@ class LivingRoom extends Phaser.Scene {
         else{
             this.line1.setText('');
             this.line2.setText('');
-        }
+        }*/
 
     }
 
