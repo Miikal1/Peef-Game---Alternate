@@ -13,6 +13,7 @@ class StairRoom extends Phaser.Scene {
         this.load.image('needle', "assets/needle.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60});
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('sideDoor', "assets/sideDoor.png");
 
     }    
 
@@ -118,13 +119,21 @@ class StairRoom extends Phaser.Scene {
 
         this.needleTwo = this.physics.add.sprite(592, 130, 'needle');
 
-      //  this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
-      //  this.doorLeft.body.immovable = true;
-      //  this.doorLeft.body.allowGravity = false;
+        this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
+        this.doorLeft.body.immovable = true;
+        this.doorLeft.body.allowGravity = false;
 
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
+
+        this.doorUp = this.physics.add.sprite(493, 35, 'clearDoor');
+        this.doorUp.body.immovable = true;
+        this.doorUp.body.allowGravity = false;
+
+        this.doorSide = this.physics.add.sprite(314, 735, 'sideDoor');
+        this.doorSide.body.immovable = true;
+        this.doorSide.body.allowGravity = false;
         
         this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -168,10 +177,6 @@ class StairRoom extends Phaser.Scene {
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
             this.p1.body.setVelocityY(-500);
         }
-
-        if(Phaser.Input.Keyboard.JustDown(this.keyG)){
-            console.log(this.has("needleTwo"));
-        }
         
         if (this.checkCollision(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyT)){
             inventory.push("needleTwo");
@@ -190,6 +195,16 @@ class StairRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('diningRoom');
+        }
+
+        if (this.checkCollision(this.p1, this.doorLeft)){
+            this.p1.x = 55;
+            this.scene.switch('kitchen');
+        }
+
+        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+            this.p1.x = 314;
+            this.scene.switch('fishTankRoom');
         }
 
     }
