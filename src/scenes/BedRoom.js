@@ -1,12 +1,12 @@
-class Kitchen extends Phaser.Scene {
+class BedRoom extends Phaser.Scene {
     constructor() {
-        super('kitchen');
+        super('bedRoom');
     }
 
     preload(){
 
-        this.load.image('kitchen', "assets/kitchen.png");
-        this.load.image('testGround', "assets/testGround.png");
+        this.load.image('bedRoom', "assets/bedRoom.png");
+        this.load.image('bedFloor', "assets/bedFloor.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('clearDoor', "assets/clearDoor.png");
@@ -27,9 +27,9 @@ class Kitchen extends Phaser.Scene {
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
 
-        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'kitchen').setOrigin(0,0);
+        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bedRoom').setOrigin(0,0);
 
-        this.ground = this.physics.add.sprite(800, 864, 'testGround');
+        this.ground = this.physics.add.sprite(800, 864, 'bedFloor');
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
 
@@ -38,6 +38,10 @@ class Kitchen extends Phaser.Scene {
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
+
+        this.doorSide = this.physics.add.sprite(1307, 735, 'sideDoor');
+        this.doorSide.body.immovable = true;
+        this.doorSide.body.allowGravity = false;
 
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
@@ -50,8 +54,9 @@ class Kitchen extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(1300, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
+        this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
@@ -96,15 +101,20 @@ class Kitchen extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        //if (this.checkCollision(this.p1, this.doorLeft)){
-        //    this.p1.x = 55;
-        //    this.scene.switch('livingRoom');
-        //}
-
         if (this.checkCollision(this.p1, this.doorRight)){
             this.p1.x = 1535;
-            this.scene.switch('stairRoom');
+            this.scene.switch('closet');
         }
+
+        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+            this.p1.x = 1300;
+            this.scene.switch('wayEnd');
+        }
+
+        //if (this.checkCollision(this.p1, this.doorRight)){
+        //    this.p1.x = 1535;
+        //    this.scene.switch('livingRoom');
+        //}
 
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
             if (this.has("rope")){

@@ -202,6 +202,11 @@ class StairRoom extends Phaser.Scene {
             this.scene.switch('kitchen');
         }
 
+        if (this.checkCollision(this.p1, this.doorUp)){
+            this.p1.x = 523;
+            this.scene.switch('upStairRoom');
+        }
+
         if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT)){
             this.p1.x = 314;
             this.scene.switch('fishTankRoom');

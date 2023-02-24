@@ -1,13 +1,16 @@
-class Kitchen extends Phaser.Scene {
+class UpStairRoom extends Phaser.Scene {
     constructor() {
-        super('kitchen');
+        super('upStairRoom');
     }
 
     preload(){
 
-        this.load.image('kitchen', "assets/kitchen.png");
+        this.load.image('upStairRoom', "assets/upStairRoom.png");
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('stairStep', "assets/stairStep.png");
+        this.load.image('stairPillarThin', "assets/stairPillarThin.png");
+        this.load.image('stairPillarThick', "assets/stairPillarThick.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
@@ -27,21 +30,45 @@ class Kitchen extends Phaser.Scene {
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
 
-        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'kitchen').setOrigin(0,0);
+        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'upStairRoom').setOrigin(0,0);
 
-        this.ground = this.physics.add.sprite(800, 864, 'testGround');
+        this.ground = this.physics.add.sprite(612, 864, 'testGround');
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
 
         this.platforms = this.add.group();
 
-        this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
+        this.stairStepOne = this.physics.add.sprite(1540, 882, 'stairStep');
+        this.stairStepOne.body.immovable = true;
+        this.stairStepOne.body.allowGravity = false;
+        this.platforms.add(this.stairStepOne);
+
+        this.stairPillarOne = this.physics.add.sprite(1580, 925, 'stairPillarThick');
+        this.stairPillarOne.body.immovable = true;
+        this.stairPillarOne.body.allowGravity = false;
+        this.platforms.add(this.stairPillarOne);
+
+        this.stairStepTwo = this.physics.add.sprite(1460, 792, 'stairStep');
+        this.stairStepTwo.body.immovable = true;
+        this.stairStepTwo.body.allowGravity = false;
+        this.platforms.add(this.stairStepTwo);
+
+        this.stairPillarTwo = this.physics.add.sprite(1501, 838, 'stairPillarThick');
+        this.stairPillarTwo.body.immovable = true;
+        this.stairPillarTwo.body.allowGravity = false;
+        this.platforms.add(this.stairPillarTwo);
+
+        this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
+        this.doorLeft.body.immovable = true;
+        this.doorLeft.body.allowGravity = false;
+
+        this.doorRight = this.physics.add.sprite(1585, 850, 'clearDoor');
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
 
-        //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
-        //this.doorRight.body.immovable = true;
-        //this.doorRight.body.allowGravity = false;
+        this.doorSide = this.physics.add.sprite(314, 735, 'sideDoor');
+        this.doorSide.body.immovable = true;
+        this.doorSide.body.allowGravity = false;
 
         //this.hammer = this.physics.add.sprite(700, 735, 'testItem');
         
@@ -50,8 +77,9 @@ class Kitchen extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(1535, 845, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
+        this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
@@ -96,14 +124,19 @@ class Kitchen extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        //if (this.checkCollision(this.p1, this.doorLeft)){
-        //    this.p1.x = 55;
-        //    this.scene.switch('livingRoom');
-        //}
+        if (this.checkCollision(this.p1, this.doorLeft)){
+            this.p1.x = 55;
+            this.scene.switch('hallWay');
+        }
 
         if (this.checkCollision(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('stairRoom');
+        }
+
+        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+           
+            this.scene.switch('playRoom');
         }
 
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){

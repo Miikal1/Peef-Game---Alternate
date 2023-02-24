@@ -17,7 +17,7 @@ let config = {
     },
     width: 1600,
     height: 900,
-    scene: [Title, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, Credits]
+    scene: [Title, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, UpStairRoom, HallWay, WayEnd, BedRoom, Closet, BathRoom, LaundryRoom, PlayRoom, Credits]
     //inventory: [null, null, null, null, null, null, null, null, null, null]
 };
 
