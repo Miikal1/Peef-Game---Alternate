@@ -12,6 +12,7 @@ class UpStairRoom extends Phaser.Scene {
         this.load.image('stairPillarThin', "assets/stairPillarThin.png");
         this.load.image('stairPillarThick', "assets/stairPillarThick.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('sniffy', "assets/sniffy.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -76,6 +77,10 @@ class UpStairRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.sniffy = this.physics.add.sprite(514, 743, 'sniffy');
+        this.sniffy.body.immovable = true;
+        this.sniffy.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(1535, 845, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

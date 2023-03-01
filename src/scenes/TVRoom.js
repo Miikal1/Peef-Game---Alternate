@@ -9,6 +9,8 @@ class TVRoom extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('greenbu', "assets/greenbu.png");
+        this.load.image('greenpa', "assets/greenpa.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -49,6 +51,14 @@ class TVRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.greenbu = this.physics.add.sprite(650, 645, 'greenbu');
+        this.greenbu.body.immovable = true;
+        this.greenbu.body.allowGravity = false;
+
+        this.greenpa = this.physics.add.sprite(700, 650, 'greenpa');
+        this.greenpa.body.immovable = true;
+        this.greenpa.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

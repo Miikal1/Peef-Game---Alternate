@@ -9,6 +9,8 @@ class FishTankRoom extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('sawtoothSide', "assets/sawtoothSide.png");
+        this.load.image('tenticles', "assets/tenticles.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -49,6 +51,15 @@ class FishTankRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.sawtooth = this.physics.add.sprite(260, 470, 'sawtoothSide');
+        this.sawtooth.body.immovable = true;
+        this.sawtooth.body.allowGravity = false;
+
+        this.tenticles = this.physics.add.sprite(1030, 440, 'tenticles');
+        this.tenticles.setFlip(true, false);
+        this.tenticles.body.immovable = true;
+        this.tenticles.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

@@ -9,6 +9,7 @@ class LaundryRoom extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('spikey', "assets/spikey.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -49,6 +50,10 @@ class LaundryRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.spikey = this.physics.add.sprite(630, 730, 'spikey');
+        this.spikey.body.immovable = true;
+        this.spikey.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

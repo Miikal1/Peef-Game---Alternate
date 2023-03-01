@@ -9,6 +9,7 @@ class Kitchen extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('magnaLegs', "assets/magnaLegs.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -49,6 +50,10 @@ class Kitchen extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.magnaLegs = this.physics.add.sprite(1380, 680, 'magnaLegs');
+        this.magnaLegs.body.immovable = true;
+        this.magnaLegs.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

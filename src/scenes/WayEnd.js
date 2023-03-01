@@ -50,7 +50,7 @@ class WayEnd extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.p1 = this.physics.add.sprite(1580, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
         this.p1.setFlip(true, false);
 

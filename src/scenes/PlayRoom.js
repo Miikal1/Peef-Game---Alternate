@@ -7,8 +7,11 @@ class PlayRoom extends Phaser.Scene {
 
         this.load.image('playRoom', "assets/playRoom.png");
         this.load.image('playFloor', "assets/playFloor.png");
+        this.load.image('shelfStory', "assets/shelfStory.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('comander', "assets/comander.png");
+        this.load.image('peefJR', "assets/peefJR.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -39,6 +42,21 @@ class PlayRoom extends Phaser.Scene {
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
 
+        this.topShelf = this.physics.add.sprite(1320, 273, 'shelfStory');
+        this.topShelf.body.immovable = true;
+        this.topShelf.body.allowGravity = false;
+        this.platforms.add(this.topShelf);
+
+        this.midShelf = this.physics.add.sprite(1320, 417, 'shelfStory');
+        this.midShelf.body.immovable = true;
+        this.midShelf.body.allowGravity = false;
+        this.platforms.add(this.midShelf);
+
+        this.botShelf = this.physics.add.sprite(1320, 573, 'shelfStory');
+        this.botShelf.body.immovable = true;
+        this.botShelf.body.allowGravity = false;
+        this.platforms.add(this.botShelf);
+
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
         //this.doorRight.body.allowGravity = false;
@@ -49,6 +67,15 @@ class PlayRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.comander = this.physics.add.sprite(830, 702, 'comander');
+        this.comander.body.immovable = true;
+        this.comander.body.allowGravity = false;
+
+        this.peefJR = this.physics.add.sprite(930, 733, 'peefJR');
+        this.peefJR.setFlip(true, false);
+        this.peefJR.body.immovable = true;
+        this.peefJR.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

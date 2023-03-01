@@ -9,6 +9,7 @@ class HallWay extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('sticker', "assets/sticker.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -58,7 +59,11 @@ class HallWay extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.p1 = this.physics.add.sprite(1580, 730, 'PeefSide');
+        this.sticker = this.physics.add.sprite(802, 335, 'sticker');
+        this.sticker.body.immovable = true;
+        this.sticker.body.allowGravity = false;
+
+        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
         this.p1.setFlip(true, false);
 
