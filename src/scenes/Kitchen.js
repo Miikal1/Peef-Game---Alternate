@@ -7,7 +7,7 @@ class Kitchen extends Phaser.Scene {
 
         this.load.image('kitchen', "assets/kitchen.png");
         this.load.image('testGround', "assets/testGround.png");
-        this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('kitchenCounterTop', "assets/kitchenCounterTop.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('magnaLegs', "assets/magnaLegs.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
@@ -35,6 +35,11 @@ class Kitchen extends Phaser.Scene {
         this.ground.body.allowGravity = false;
 
         this.platforms = this.add.group();
+
+        this.counter = this.physics.add.sprite(557, 457, 'kitchenCounterTop');
+        this.counter .body.immovable = true;
+        this.counter .body.allowGravity = false;
+        this.platforms.add(this.counter );
 
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;

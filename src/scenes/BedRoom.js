@@ -7,6 +7,9 @@ class BedRoom extends Phaser.Scene {
 
         this.load.image('bedRoom', "assets/bedRoom.png");
         this.load.image('bedFloor', "assets/bedFloor.png");
+        this.load.image('bedBox', "assets/bedBox.png");
+        this.load.image('bedTop', "assets/bedTop.png");
+        this.load.image('windowSillFront', "assets/windowSillFront.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('clearDoor', "assets/clearDoor.png");
@@ -34,6 +37,21 @@ class BedRoom extends Phaser.Scene {
         this.ground.body.allowGravity = false;
 
         this.platforms = this.add.group();
+
+        this.box = this.physics.add.sprite(600, 660, 'bedBox');
+        this.box.body.immovable = true;
+        this.box.body.allowGravity = false;
+        this.platforms.add(this.box);
+
+        this.bed = this.physics.add.sprite(296, 535, 'bedTop');
+        this.bed.body.immovable = true;
+        this.bed.body.allowGravity = false;
+        this.platforms.add(this.bed);
+
+        this.windowSill = this.physics.add.sprite(1139, 441, 'windowSillFront');
+        this.windowSill.body.immovable = true;
+        this.windowSill.body.allowGravity = false;
+        this.platforms.add(this.windowSill);
 
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;

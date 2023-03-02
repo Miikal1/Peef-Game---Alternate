@@ -7,6 +7,8 @@ class Closet extends Phaser.Scene {
 
         this.load.image('closet', "assets/closet.png");
         this.load.image('testGround', "assets/testGround.png");
+        this.load.image('closetDrawerTop', "assets/closetDrawerTop.png");
+        this.load.image('closetPlatform', "assets/closetPlatform.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('snowWing', "assets/snowWing.png");
@@ -35,6 +37,26 @@ class Closet extends Phaser.Scene {
         this.ground.body.allowGravity = false;
 
         this.platforms = this.add.group();
+
+        this.dresser = this.physics.add.sprite(813, 434, 'closetDrawerTop');
+        this.dresser.body.immovable = true;
+        this.dresser.body.allowGravity = false;
+        this.platforms.add(this.dresser);
+
+        this.lowShelf = this.physics.add.sprite(1468, 632, 'closetPlatform');
+        this.lowShelf.body.immovable = true;
+        this.lowShelf.body.allowGravity = false;
+        this.platforms.add(this.lowShelf);
+
+        this.midShelf = this.physics.add.sprite(1536, 528, 'closetPlatform');
+        this.midShelf.body.immovable = true;
+        this.midShelf.body.allowGravity = false;
+        this.platforms.add(this.midShelf);
+
+        this.topShelf = this.physics.add.sprite(1604, 417, 'closetPlatform');
+        this.topShelf.body.immovable = true;
+        this.topShelf.body.allowGravity = false;
+        this.platforms.add(this.topShelf);
 
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;

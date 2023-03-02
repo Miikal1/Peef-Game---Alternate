@@ -7,7 +7,9 @@ class LaundryRoom extends Phaser.Scene {
 
         this.load.image('laundryRoom', "assets/laundryRoom.png");
         this.load.image('testGround', "assets/testGround.png");
-        this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('windowSillSide', "assets/windowSillSide.png");
+        this.load.image('laundryMachineTop', "assets/laundryMachineTop.png");
+        this.load.image('laundryPlatform', "assets/laundryPlatform.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('spikey', "assets/spikey.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
@@ -36,6 +38,26 @@ class LaundryRoom extends Phaser.Scene {
 
         this.platforms = this.add.group();
 
+        this.windowSill = this.physics.add.sprite(1565, 411, 'windowSillSide');
+        this.windowSill.body.immovable = true;
+        this.windowSill.body.allowGravity = false;
+        this.platforms.add(this.windowSill);
+
+        this.machineLeft = this.physics.add.sprite(364, 465, 'laundryMachineTop');
+        this.machineLeft.body.immovable = true;
+        this.machineLeft.body.allowGravity = false;
+        this.platforms.add(this.machineLeft);
+
+        this.machineRight = this.physics.add.sprite(705, 465, 'laundryMachineTop');
+        this.machineRight.body.immovable = true;
+        this.machineRight.body.allowGravity = false;
+        this.platforms.add(this.machineRight);
+
+        this.platform = this.physics.add.sprite(1345, 480, 'laundryPlatform');
+        this.platform.body.immovable = true;
+        this.platform.body.allowGravity = false;
+        this.platforms.add(this.platform);
+
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
@@ -51,7 +73,7 @@ class LaundryRoom extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.spikey = this.physics.add.sprite(630, 730, 'spikey');
+        this.spikey = this.physics.add.sprite(630, 748, 'spikey');
         this.spikey.body.immovable = true;
         this.spikey.body.allowGravity = false;
 

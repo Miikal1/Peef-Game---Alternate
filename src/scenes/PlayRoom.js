@@ -8,7 +8,8 @@ class PlayRoom extends Phaser.Scene {
         this.load.image('playRoom', "assets/playRoom.png");
         this.load.image('playFloor', "assets/playFloor.png");
         this.load.image('shelfStory', "assets/shelfStory.png");
-        this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('playRoomShelf', "assets/playRoomShelf.png");
+        this.load.image('windowSillSide', "assets/windowSillSide.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('comander', "assets/comander.png");
         this.load.image('peefJR', "assets/peefJR.png");
@@ -56,6 +57,16 @@ class PlayRoom extends Phaser.Scene {
         this.botShelf.body.immovable = true;
         this.botShelf.body.allowGravity = false;
         this.platforms.add(this.botShelf);
+
+        this.highShelf = this.physics.add.sprite(337, 182, 'playRoomShelf');
+        this.highShelf.body.immovable = true;
+        this.highShelf.body.allowGravity = false;
+        this.platforms.add(this.highShelf);
+
+        this.windowSill = this.physics.add.sprite(1565, 411, 'windowSillSide');
+        this.windowSill.body.immovable = true;
+        this.windowSill.body.allowGravity = false;
+        this.platforms.add(this.windowSill);
 
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
