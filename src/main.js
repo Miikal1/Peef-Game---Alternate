@@ -21,7 +21,7 @@ let config = {
     //inventory: [null, null, null, null, null, null, null, null, null, null]
 };
 
-let keyA, keyD, keyW, keyT, keyG, keyV;
+let keyA, keyD, keyW, keyR, keyT, keyG, keyV;
 
 let borderUISize = config.height / 15;
 let borderPadding = borderUISize / 3;

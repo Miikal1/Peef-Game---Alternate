@@ -26,6 +26,7 @@ class BedRoom extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
@@ -41,7 +42,6 @@ class BedRoom extends Phaser.Scene {
         this.box = this.physics.add.sprite(600, 660, 'bedBox');
         this.box.body.immovable = true;
         this.box.body.allowGravity = false;
-        this.platforms.add(this.box);
 
         this.bed = this.physics.add.sprite(296, 535, 'bedTop');
         this.bed.body.immovable = true;
@@ -77,6 +77,7 @@ class BedRoom extends Phaser.Scene {
         this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
+        this.physics.add.collider(this.p1, this.box);
         this.physics.add.collider(this.p1, this.platforms);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -100,13 +101,15 @@ class BedRoom extends Phaser.Scene {
 
     update(){
 
+        console.log(this.checkCollision(this.p1, this.box));
+
         if(this.keyA.isDown && this.talking == false) {
-            this.p1.setVelocityX(-200);
+            this.p1.setVelocityX(-270);
             this.p1.setFlip(true, false);
             this.p1.anims.play('walk', true);
         }
         else if(this.keyD.isDown && this.talking == false) {
-            this.p1.setVelocityX(200);
+            this.p1.setVelocityX(270);
             this.p1.resetFlip();
             this.p1.anims.play('walk', true);
         }
@@ -115,6 +118,12 @@ class BedRoom extends Phaser.Scene {
             this.p1.anims.play('idle', true);
         }
     
+        if(this.checkCollision(this.p1, this.box) && this.p1.y <= this.box.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-520);
+            console.log(this.p1.velocityY);
+            console.log("3");
+        }
+
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {
             this.p1.body.setVelocityY(-500);
         }

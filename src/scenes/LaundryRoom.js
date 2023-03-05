@@ -12,6 +12,7 @@ class LaundryRoom extends Phaser.Scene {
         this.load.image('laundryPlatform', "assets/laundryPlatform.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('spikey', "assets/spikey.png");
+        this.load.image('stool', "assets/stool.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -26,6 +27,7 @@ class LaundryRoom extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
@@ -58,6 +60,10 @@ class LaundryRoom extends Phaser.Scene {
         this.platform.body.allowGravity = false;
         this.platforms.add(this.platform);
 
+        this.stool = this.physics.add.sprite(1200, 730, 'stool');
+        this.stool.body.immovable = true;
+        this.stool.body.allowGravity = false;
+
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
@@ -83,6 +89,7 @@ class LaundryRoom extends Phaser.Scene {
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
+        this.physics.add.collider(this.p1, this.stool);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -106,18 +113,24 @@ class LaundryRoom extends Phaser.Scene {
     update(){
 
         if(this.keyA.isDown && this.talking == false) {
-            this.p1.setVelocityX(-200);
+            this.p1.setVelocityX(-270);
             this.p1.setFlip(true, false);
             this.p1.anims.play('walk', true);
         }
         else if(this.keyD.isDown && this.talking == false) {
-            this.p1.setVelocityX(200);
+            this.p1.setVelocityX(270);
             this.p1.resetFlip();
             this.p1.anims.play('walk', true);
         }
         else {
             this.p1.setVelocityX(0);
             this.p1.anims.play('idle', true);
+        }
+
+        if(this.checkCollision(this.p1, this.stool) && this.p1.y <= this.stool.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-800);
+            console.log(this.p1.velocityY);
+            console.log("3");
         }
     
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {

@@ -14,6 +14,7 @@ class LivingRoom extends Phaser.Scene {
         this.load.image('goodLamb', "assets/goodLamb.png");
         this.load.image('spool', "assets/spool.png");
         this.load.image('ropeClimb', "assets/ropeClimb.png");
+        this.load.image('interactionPoint', "assets/interactionPoint.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -28,6 +29,7 @@ class LivingRoom extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
@@ -73,7 +75,7 @@ class LivingRoom extends Phaser.Scene {
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
 
-        this.ropeSpot = this.physics.add.sprite(630, 735, 'clearDoor');
+        this.ropeSpot = this.physics.add.sprite(630, 735, 'interactionPoint');
         this.ropeSpot.body.immovable = true;
         this.ropeSpot.body.allowGravity = false;
 
@@ -119,12 +121,12 @@ class LivingRoom extends Phaser.Scene {
     update(){
 
         if(this.keyA.isDown && this.talking == false) {
-            this.p1.setVelocityX(-200);
+            this.p1.setVelocityX(-270);
             this.p1.setFlip(true, false);
             this.p1.anims.play('walk', true);
         }
         else if(this.keyD.isDown && this.talking == false) {
-            this.p1.setVelocityX(200);
+            this.p1.setVelocityX(270);
             this.p1.resetFlip();
             this.p1.anims.play('walk', true);
         }
@@ -147,7 +149,7 @@ class LivingRoom extends Phaser.Scene {
             this.scene.switch('tvRoom');
         }
 
-        if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+        if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             if (this.has("rope")){
                 this.takeOut("rope");
                 this.ropeSpot.destroy();
@@ -158,11 +160,11 @@ class LivingRoom extends Phaser.Scene {
             
         }
 
-        if (this.rope && this.checkCollision(this.p1, this.rope) && this.keyT.isDown){
+        if (this.rope && this.checkCollision(this.p1, this.rope) && this.keyR.isDown){
             this.p1.body.allowGravity = false;
             this.p1.body.setVelocityY(-500);
         }
-        else if (this.rope && !this.checkCollision(this.p1, this.rope) || !(this.keyT.isDown)){
+        else if (this.rope && !this.checkCollision(this.p1, this.rope) || !(this.keyR.isDown)){
             this.p1.body.allowGravity = true;
         }
 
@@ -170,7 +172,7 @@ class LivingRoom extends Phaser.Scene {
             console.log(true);
         }
 
-        if (this.checkCollision(this.p1, this.spool) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+        if (this.checkCollision(this.p1, this.spool) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("spool");
             this.spool.destroy();
         }   

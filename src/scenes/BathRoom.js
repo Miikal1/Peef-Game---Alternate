@@ -23,7 +23,8 @@ class BathRoom extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
 
@@ -79,12 +80,12 @@ class BathRoom extends Phaser.Scene {
     update(){
 
         if(this.keyA.isDown && this.talking == false) {
-            this.p1.setVelocityX(-200);
+            this.p1.setVelocityX(-270);
             this.p1.setFlip(true, false);
             this.p1.anims.play('walk', true);
         }
         else if(this.keyD.isDown && this.talking == false) {
-            this.p1.setVelocityX(200);
+            this.p1.setVelocityX(270);
             this.p1.resetFlip();
             this.p1.anims.play('walk', true);
         }
