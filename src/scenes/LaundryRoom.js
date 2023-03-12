@@ -9,6 +9,8 @@ class LaundryRoom extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('windowSillSide', "assets/windowSillSide.png");
         this.load.image('laundryMachineTop', "assets/laundryMachineTop.png");
+        this.load.image('laundryMachine', "assets/laundryMachine.png");
+        this.load.image('laundryBucket', "assets/laundryBucket.png");
         this.load.image('laundryPlatform', "assets/laundryPlatform.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('spikey', "assets/spikey.png");
@@ -63,6 +65,18 @@ class LaundryRoom extends Phaser.Scene {
         this.stool = this.physics.add.sprite(1200, 730, 'stool');
         this.stool.body.immovable = true;
         this.stool.body.allowGravity = false;
+
+        this.washer = this.physics.add.sprite(364, 732, 'laundryMachine');
+        this.washer.body.immovable = true;
+        this.washer.body.allowGravity = false;
+
+        this.dryer = this.physics.add.sprite(705, 732, 'laundryMachine');
+        this.dryer.body.immovable = true;
+        this.dryer.body.allowGravity = false;
+
+        this.bucket = this.physics.add.sprite(998, 730, 'laundryBucket');
+        this.bucket.body.immovable = true;
+        this.bucket.body.allowGravity = false;
 
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;

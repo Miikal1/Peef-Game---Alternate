@@ -8,7 +8,12 @@ class BathRoom extends Phaser.Scene {
         this.load.image('bathRoom', "assets/bathRoom.png");
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('bathRoomSink', "assets/bathRoomSink.png");
+        this.load.image('bathRoomTub', "assets/bathRoomTub.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
+        this.load.image('curie', "assets/curie.png");
+        this.load.image('celly', "assets/celly.png");
+        this.load.image('bloody', "assets/bloody.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -36,6 +41,14 @@ class BathRoom extends Phaser.Scene {
 
         this.platforms = this.add.group();
 
+        this.sink = this.physics.add.sprite(376, 721, 'bathRoomSink');
+        this.sink.body.immovable = true;
+        this.sink.body.allowGravity = false;
+
+        this.tub = this.physics.add.sprite(1252, 750, 'bathRoomTub');
+        this.tub.body.immovable = true;
+        this.tub.body.allowGravity = false;
+
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
@@ -50,6 +63,18 @@ class BathRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.curie = this.physics.add.sprite(550, 741, 'curie');
+        this.curie.body.immovable = true;
+        this.curie.body.allowGravity = false;
+
+        this.bloody = this.physics.add.sprite(500, 741, 'bloody');
+        this.bloody.body.immovable = true;
+        this.bloody.body.allowGravity = false;
+
+        this.celly = this.physics.add.sprite(600, 741, 'celly');
+        this.celly.body.immovable = true;
+        this.celly.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);

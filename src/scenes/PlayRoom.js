@@ -9,6 +9,13 @@ class PlayRoom extends Phaser.Scene {
         this.load.image('playFloor', "assets/playFloor.png");
         this.load.image('shelfStory', "assets/shelfStory.png");
         this.load.image('playRoomShelf', "assets/playRoomShelf.png");
+        this.load.image('playRoomBigChest', "assets/playRoomBigChest.png");
+        this.load.image('playRoomMiniChest', "assets/playRoomMiniChest.png");
+        this.load.image('playRoomBoardGame', "assets/playRoomBoardGame.png");
+        this.load.image('playRoomThinBook', "assets/playRoomThinBook.png");
+        this.load.image('playRoomThickBook', "assets/playRoomThickBook.png");
+        this.load.image('playRoomLegoCar', "assets/playRoomLegoCar.png");
+        this.load.image('playRoomLegoCastle', "assets/playRoomLegoCastle.png");
         this.load.image('windowSillSide', "assets/windowSillSide.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('comander', "assets/comander.png");
@@ -68,6 +75,42 @@ class PlayRoom extends Phaser.Scene {
         this.windowSill.body.immovable = true;
         this.windowSill.body.allowGravity = false;
         this.platforms.add(this.windowSill);
+
+        this.bigChest = this.physics.add.sprite(307, 721, 'playRoomBigChest');
+        this.bigChest.body.immovable = true;
+        this.bigChest.body.allowGravity = false;
+
+        this.miniChest = this.physics.add.sprite(1405, 680, 'playRoomMiniChest');
+        this.miniChest.body.immovable = true;
+        this.miniChest.body.allowGravity = false;
+
+        this.boardGame = this.physics.add.sprite(1281, 545, 'playRoomBoardGame');
+        this.boardGame.body.immovable = true;
+        this.boardGame.body.allowGravity = false;
+
+        this.purpleBook = this.physics.add.sprite(1419, 374, 'playRoomThinBook');
+        this.purpleBook.body.immovable = true;
+        this.purpleBook.body.allowGravity = false;
+
+        this.redBook = this.physics.add.sprite(1380, 374, 'playRoomThinBook');
+        this.redBook.body.immovable = true;
+        this.redBook.body.allowGravity = false;
+
+        this.greenBook = this.physics.add.sprite(1345, 374, 'playRoomThinBook');
+        this.greenBook.body.immovable = true;
+        this.greenBook.body.allowGravity = false;
+
+        this.dictionary = this.physics.add.sprite(1249, 382, 'playRoomThickBook');
+        this.dictionary.body.immovable = true;
+        this.dictionary.body.allowGravity = false;
+
+        this.legoCar = this.physics.add.sprite(1399, 233, 'playRoomLegoCar');
+        this.legoCar.body.immovable = true;
+        this.legoCar.body.allowGravity = false;
+
+        this.legoCastle = this.physics.add.sprite(1255, 233, 'playRoomLegoCastle');
+        this.legoCastle.body.immovable = true;
+        this.legoCastle.body.allowGravity = false;
 
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;

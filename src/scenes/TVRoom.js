@@ -9,6 +9,8 @@ class TVRoom extends Phaser.Scene {
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
         this.load.image('tvTable', "assets/tvTable.png");
+        this.load.image('tvStand', "assets/tvStand.png");
+        this.load.image('remote', "assets/remote.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('greenbu', "assets/greenbu.png");
         this.load.image('greenpa', "assets/greenpa.png");
@@ -43,6 +45,18 @@ class TVRoom extends Phaser.Scene {
         this.table.body.immovable = true;
         this.table.body.allowGravity = false;
         this.platforms.add(this.table);
+
+        this.tvStand = this.physics.add.sprite(1105, 740, 'tvStand');
+        this.tvStand.body.immovable = true;
+        this.tvStand.body.allowGravity = false;
+
+        this.cdCase = this.physics.add.sprite(210, 740, 'tvStand');
+        this.cdCase.body.immovable = true;
+        this.cdCase.body.allowGravity = false;
+
+        this.remote = this.physics.add.sprite(795, 655, 'remote');
+        this.remote.body.immovable = true;
+        this.remote.body.allowGravity = false;
 
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;

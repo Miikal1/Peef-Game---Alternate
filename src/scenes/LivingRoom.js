@@ -14,6 +14,8 @@ class LivingRoom extends Phaser.Scene {
         this.load.image('goodLamb', "assets/goodLamb.png");
         this.load.image('spool', "assets/spool.png");
         this.load.image('ropeClimb', "assets/ropeClimb.png");
+        this.load.image('livingRoomBoardgame', "assets/livingRoomBoardgame.png");
+        this.load.image('livingRoomBook', "assets/livingRoomBook.png");
         this.load.image('interactionPoint', "assets/interactionPoint.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
@@ -66,6 +68,34 @@ class LivingRoom extends Phaser.Scene {
         this.botShelf.body.immovable = true;
         this.botShelf.body.allowGravity = false;
         this.platforms.add(this.botShelf);
+
+        this.redBook = this.physics.add.sprite(568, 684, 'livingRoomBook');
+        this.redBook.body.immovable = true;
+        this.redBook.body.allowGravity = false;
+
+        this.purpleBook = this.physics.add.sprite(516, 684, 'livingRoomBook');
+        this.purpleBook.body.immovable = true;
+        this.purpleBook.body.allowGravity = false;
+
+        this.yellowBook = this.physics.add.sprite(476, 684, 'livingRoomBook');
+        this.yellowBook.body.immovable = true;
+        this.yellowBook.body.allowGravity = false;
+
+        this.greenBook = this.physics.add.sprite(436, 684, 'livingRoomBook');
+        this.greenBook.body.immovable = true;
+        this.greenBook.body.allowGravity = false;
+
+        this.magentaBook = this.physics.add.sprite(392, 684, 'livingRoomBook');
+        this.magentaBook.body.immovable = true;
+        this.magentaBook.body.allowGravity = false;
+
+        this.blueBook = this.physics.add.sprite(348, 684, 'livingRoomBook');
+        this.blueBook.body.immovable = true;
+        this.blueBook.body.allowGravity = false;
+
+        this.boardgame = this.physics.add.sprite(436, 514, 'livingRoomBoardgame');
+        this.boardgame.body.immovable = true;
+        this.boardgame.body.allowGravity = false;
 
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;

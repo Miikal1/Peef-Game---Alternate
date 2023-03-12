@@ -8,6 +8,8 @@ class Kitchen extends Phaser.Scene {
         this.load.image('kitchen', "assets/kitchen.png");
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('kitchenCounterTop', "assets/kitchenCounterTop.png");
+        this.load.image('kitchenDrawer', "assets/kitchenDrawer.png");
+        this.load.image('kitchenToaster', "assets/kitchenToaster.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('magnaLegs', "assets/magnaLegs.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
@@ -38,9 +40,33 @@ class Kitchen extends Phaser.Scene {
         this.platforms = this.add.group();
 
         this.counter = this.physics.add.sprite(557, 457, 'kitchenCounterTop');
-        this.counter .body.immovable = true;
-        this.counter .body.allowGravity = false;
+        this.counter.body.immovable = true;
+        this.counter.body.allowGravity = false;
         this.platforms.add(this.counter );
+
+        this.drawerRight = this.physics.add.sprite(920, 745, 'kitchenDrawer');
+        this.drawerRight.body.immovable = true;
+        this.drawerRight.body.allowGravity = false;
+
+        this.drawerMid = this.physics.add.sprite(681, 745, 'kitchenDrawer');
+        this.drawerMid.body.immovable = true;
+        this.drawerMid.body.allowGravity = false;
+
+        this.oven = this.physics.add.sprite(435, 745, 'kitchenDrawer');
+        this.oven.body.immovable = true;
+        this.oven.body.allowGravity = false;
+
+        this.drawerLeft = this.physics.add.sprite(191, 745, 'kitchenDrawer');
+        this.drawerLeft.body.immovable = true;
+        this.drawerLeft.body.allowGravity = false;
+
+        this.fridge = this.physics.add.sprite(1290, 745, 'kitchenDrawer');
+        this.fridge.body.immovable = true;
+        this.fridge.body.allowGravity = false;
+
+        this.toaster = this.physics.add.sprite(818, 427, 'kitchenToaster');
+        this.toaster.body.immovable = true;
+        this.toaster.body.allowGravity = false;
 
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;
