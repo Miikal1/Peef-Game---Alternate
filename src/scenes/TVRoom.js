@@ -174,7 +174,7 @@ class TVRoom extends Phaser.Scene {
                     this.line1.setText('Greenbu: Thanks for the batteries, Peef. Now to find some good cartoons.');
                     this.line2.setText('Peef: Have fun. Tell me your recommendations latter.');
                 }
-                else if (!(this.has("needleOne")) || !(this.has("needleTwo"))) {
+                else if (!(this.has("batteryOne")) || !(this.has("batterTwo"))) {
                     this.line1.setText('Peef: Enjoying the show, kids?');
                     this.line2.setText('Greenbu: Oh, hey Peef. Not really. We want to change channel but the remotes not working.');
                 }
@@ -185,7 +185,7 @@ class TVRoom extends Phaser.Scene {
                     this.line1.setText('Peef: We just put these in the remote in just the right way, and its working good as new.');
                     this.line2.setText('Greenpa: Thanks Peef. I just hope these batteries last longer this time.');
                 }
-                else if (!(this.has("needleOne")) || !(this.has("needleTwo"))) {
+                else if (!(this.has("batterOne")) || !(this.has("batteryTwo"))) {
                     this.line1.setText('Greenpa: Of course now the remote breaks. How long are we going to stuck watching factory documentaries.');
                     this.line2.setText('Peef: Calm down, little guy. The remote probably needs fresh batteries again.');
                 }
