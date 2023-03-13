@@ -133,7 +133,7 @@ class BedRoom extends Phaser.Scene {
             this.scene.switch('closet');
         }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             this.p1.x = 1300;
             this.scene.switch('wayEnd');
         }

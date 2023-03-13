@@ -8,6 +8,8 @@ class PlayRoom extends Phaser.Scene {
         this.load.image('playRoom', "assets/playRoom.png");
         this.load.image('playFloor', "assets/playFloor.png");
         this.load.image('shelfStory', "assets/shelfStory.png");
+        this.load.image('stool', "assets/stool.png");
+        this.load.image('medBag', "assets/medBag.png");
         this.load.image('playRoomShelf', "assets/playRoomShelf.png");
         this.load.image('playRoomBigChest', "assets/playRoomBigChest.png");
         this.load.image('playRoomMiniChest', "assets/playRoomMiniChest.png");
@@ -112,6 +114,12 @@ class PlayRoom extends Phaser.Scene {
         this.legoCastle.body.immovable = true;
         this.legoCastle.body.allowGravity = false;
 
+        this.stool = this.physics.add.sprite(1100, 730, 'stool');
+        this.stool.body.immovable = true;
+        this.stool.body.allowGravity = false;
+
+        this.medBag = this.physics.add.sprite(1420, 553, 'medBag');
+
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
         //this.doorRight.body.allowGravity = false;
@@ -138,6 +146,8 @@ class PlayRoom extends Phaser.Scene {
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
+        this.physics.add.collider(this.p1, this.stool);
+        this.physics.add.collider(this.medBag, this.platforms);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -174,6 +184,14 @@ class PlayRoom extends Phaser.Scene {
             this.p1.setVelocityX(0);
             this.p1.anims.play('idle', true);
         }
+
+        if(this.checkCollision(this.p1, this.stool) && this.p1.y <= this.stool.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-800);
+        }
+
+        if(this.checkCollision(this.p1, this.windowSill) && this.p1.y <= this.windowSill.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-600);
+        }
     
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {
             this.p1.body.setVelocityY(-500);
@@ -182,6 +200,11 @@ class PlayRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('upStairRoom');
+        }
+
+        if (this.checkCollision(this.p1, this.medBag) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            inventory.push("medBag");
+            this.medBag.destroy();
         }
 
         //if (this.checkCollision(this.p1, this.doorRight)){
@@ -211,19 +234,34 @@ class PlayRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if (this.checkCollision(this.p1, this.comander) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
+        if ((this.checkCollision(this.p1, this.peefJR)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.comander)) {
+                if (this.has("cards")){
+                    this.line1.setText('Comander: Thank you, general. Now then, soldier, you start the game with . . .');
+                    this.line2.setText('Peef: Thank goodness you just ment the card game. Also, you do not have to call me general.');
                 }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                else if (!(this.has("cards"))) {
+                    this.line1.setText('Comander: At ease, General. I am going to teach JR how to play War. Can you help find the supplies?');
+                    this.line2.setText('Peef: Uh, sure . . . We do not have guns in this house, right?');
+                }
+            }
+
+            if (this.checkCollision(this.p1, this.peefJR)) {
+                if (this.has("cards")){
+                    this.line1.setText('Peef Jr: So war is just card game. fuh! I was getting worried, *hugs Peef* ');
+                    this.line2.setText('Peef: There there, JR. Its all okay. Now go fun!');
+                }
+                else if (!(this.has("cards"))) {
+                    this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. And he keeps calling me soldier.');
+                    this.line2.setText('Peef: Comander calls almost everyone that. Do not worry, I am pretty sure he doe not want to hurt you.');
                 }
             }
 
@@ -235,7 +273,7 @@ class PlayRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

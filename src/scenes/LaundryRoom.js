@@ -15,6 +15,7 @@ class LaundryRoom extends Phaser.Scene {
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('spikey', "assets/spikey.png");
         this.load.image('stool', "assets/stool.png");
+        this.load.image('shot', "assets/shot.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -66,6 +67,8 @@ class LaundryRoom extends Phaser.Scene {
         this.stool.body.immovable = true;
         this.stool.body.allowGravity = false;
 
+        this.shot = this.physics.add.sprite(1570, 380, 'shot');
+
         this.washer = this.physics.add.sprite(364, 732, 'laundryMachine');
         this.washer.body.immovable = true;
         this.washer.body.allowGravity = false;
@@ -104,6 +107,7 @@ class LaundryRoom extends Phaser.Scene {
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
         this.physics.add.collider(this.p1, this.stool);
+        this.physics.add.collider(this.shot, this.platforms);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -154,6 +158,11 @@ class LaundryRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('hallWay');
+        }
+
+        if (this.checkCollision(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            inventory.push("shot");
+            this.shot.destroy();
         }
 
         //if (this.checkCollision(this.p1, this.doorRight)){

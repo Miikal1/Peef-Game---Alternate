@@ -12,6 +12,8 @@ class Kitchen extends Phaser.Scene {
         this.load.image('kitchenToaster', "assets/kitchenToaster.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('magnaLegs', "assets/magnaLegs.png");
+        this.load.image('stool', "assets/stool.png");
+        this.load.image('stephascope', "assets/stephascope.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -42,7 +44,7 @@ class Kitchen extends Phaser.Scene {
         this.counter = this.physics.add.sprite(557, 457, 'kitchenCounterTop');
         this.counter.body.immovable = true;
         this.counter.body.allowGravity = false;
-        this.platforms.add(this.counter );
+        this.platforms.add(this.counter);
 
         this.drawerRight = this.physics.add.sprite(920, 745, 'kitchenDrawer');
         this.drawerRight.body.immovable = true;
@@ -68,6 +70,12 @@ class Kitchen extends Phaser.Scene {
         this.toaster.body.immovable = true;
         this.toaster.body.allowGravity = false;
 
+        this.stool = this.physics.add.sprite(1080, 730, 'stool');
+        this.stool.body.immovable = true;
+        this.stool.body.allowGravity = false;
+
+        this.stephascope = this.physics.add.sprite(157, 422, 'stephascope');
+
         this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
@@ -92,6 +100,8 @@ class Kitchen extends Phaser.Scene {
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
+        this.physics.add.collider(this.p1, this.stool);
+        this.physics.add.collider(this.stephascope, this.platforms);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -128,6 +138,10 @@ class Kitchen extends Phaser.Scene {
             this.p1.setVelocityX(0);
             this.p1.anims.play('idle', true);
         }
+
+        if(this.checkCollision(this.p1, this.stool) && this.p1.y <= this.stool.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-800);
+        }
     
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {
             this.p1.body.setVelocityY(-500);
@@ -141,6 +155,11 @@ class Kitchen extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('stairRoom');
+        }
+
+        if (this.checkCollision(this.p1, this.stephascope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            inventory.push("stephascope");
+            this.stephascope.destroy();
         }
 
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){

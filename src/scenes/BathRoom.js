@@ -64,7 +64,7 @@ class BathRoom extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.curie = this.physics.add.sprite(550, 741, 'curie');
+        this.curie = this.physics.add.sprite(570, 741, 'curie');
         this.curie.body.immovable = true;
         this.curie.body.allowGravity = false;
 
@@ -72,7 +72,7 @@ class BathRoom extends Phaser.Scene {
         this.bloody.body.immovable = true;
         this.bloody.body.allowGravity = false;
 
-        this.celly = this.physics.add.sprite(600, 741, 'celly');
+        this.celly = this.physics.add.sprite(640, 741, 'celly');
         this.celly.body.immovable = true;
         this.celly.body.allowGravity = false;
 
@@ -155,19 +155,47 @@ class BathRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if ((this.checkCollision(this.p1, this.curie) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
+        if ((this.checkCollision(this.p1, this.celly) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.bloody) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.bloody)) {
+                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
+                    this.line1.setText('Bloody: Thanks for the help. We will be helping everyone in the house soon enough.');
+                    this.line2.setText('Peef: Have fun living the dream, doctors.');
                 }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                    this.line1.setText('Bloody: Hey Peef. Guess what? We are so close to reaching are dream of medicine practice. We just need a little more supplies.');
+                    this.line2.setText('Peef: I have been happy to support your dream. And I am happy to help to.');
+                }
+            }
+            if (this.checkCollision(this.p1, this.curie)) {
+                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
+                    this.line1.setText('Curie: You got everything?! Thank you Peef! Dreams are coming true!');
+                    this.line2.setText('Peef: Nice to see you so happy. Good luck doctors.');
+                }
+                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                    this.line1.setText('Peef: Hey Curie. You and the cells still trying to become doctors?');
+                    this.line2.setText('Curie: We sure are, Peef! We just need a few more supplies. We will be the best healers ever!');
+                }
+            }
+            if (this.checkCollision(this.p1, this.celly)) {
+                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
+                    this.line1.setText('Celly: Thats everything we need. Now we can set up our office.');
+                    this.line2.setText('Celly: Plushies of a red blood cell, white blood cell, and a bottle of Covid vaccine working as doctors. Sure to be a success.');
+                }
+                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                    this.line1.setText('Peef: Hey Celly. I here you guys are getting close to becoming doctors.');
+                    this.line2.setText('Celly: Yeah. We just need a med bag, a seringe, and a stephascope. Then we can set up shop.');
                 }
             }
 
@@ -179,7 +207,7 @@ class BathRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

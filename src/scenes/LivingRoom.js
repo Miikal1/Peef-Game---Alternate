@@ -13,6 +13,7 @@ class LivingRoom extends Phaser.Scene {
         this.load.image('stiches', "assets/stiches.png");
         this.load.image('goodLamb', "assets/goodLamb.png");
         this.load.image('spool', "assets/spool.png");
+        this.load.image('cardDeck', "assets/cardDeck.png");
         this.load.image('ropeClimb', "assets/ropeClimb.png");
         this.load.image('livingRoomBoardgame', "assets/livingRoomBoardgame.png");
         this.load.image('livingRoomBook', "assets/livingRoomBook.png");
@@ -112,6 +113,8 @@ class LivingRoom extends Phaser.Scene {
         //this.hammer = this.physics.add.sprite(700, 735, 'testItem');
 
         this.spool = this.physics.add.sprite(400, 250, 'spool');
+
+        this.cards = this.physics.add.sprite(580, 550, 'cardDeck');
         
         this.stiches = this.physics.add.sprite(1400, 730, 'stiches');
 
@@ -126,6 +129,7 @@ class LivingRoom extends Phaser.Scene {
         this.physics.add.collider(this.goodLamb, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
         this.physics.add.collider(this.spool, this.platforms);
+        this.physics.add.collider(this.cards, this.platforms);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -205,6 +209,11 @@ class LivingRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.spool) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("spool");
             this.spool.destroy();
+        }   
+
+        if (this.checkCollision(this.p1, this.cards) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            inventory.push("cards");
+            this.cards.destroy();
         }   
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){

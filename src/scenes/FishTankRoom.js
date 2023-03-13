@@ -11,6 +11,7 @@ class FishTankRoom extends Phaser.Scene {
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('sawtoothSide', "assets/sawtoothSide.png");
         this.load.image('tenticles', "assets/tenticles.png");
+        this.load.image('battery', "assets/battery.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -42,6 +43,8 @@ class FishTankRoom extends Phaser.Scene {
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
 
+        this.battery = this.physics.add.sprite(1520, 740, 'battery');
+
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
         //this.doorRight.body.allowGravity = false;
@@ -68,6 +71,7 @@ class FishTankRoom extends Phaser.Scene {
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
+        this.physics.add.collider(this.battery, this.ground);
 
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
@@ -112,6 +116,11 @@ class FishTankRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('stairRoom');
+        }
+
+        if (this.checkCollision(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            inventory.push("batteryTwo");
+            this.battery.destroy();
         }
 
         //if (this.checkCollision(this.p1, this.doorRight)){

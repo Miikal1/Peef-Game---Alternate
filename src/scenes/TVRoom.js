@@ -160,19 +160,34 @@ class TVRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if ((this.checkCollision(this.p1, this.greenbu) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
+        if ((this.checkCollision(this.p1, this.greenpa) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.greenbu)) {
+                if (this.has("batteryOne") && this.has("batteryTwo")){
+                    this.line1.setText('Greenbu: Thanks for the batteries, Peef. Now to find some good cartoons.');
+                    this.line2.setText('Peef: Have fun. Tell me your recommendations latter.');
                 }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                else if (!(this.has("needleOne")) || !(this.has("needleTwo"))) {
+                    this.line1.setText('Peef: Enjoying the show, kids?');
+                    this.line2.setText('Greenbu: Oh, hey Peef. Not really. We want to change channel but the remotes not working.');
+                }
+            }
+
+            if (this.checkCollision(this.p1, this.greenpa)) {
+                if (this.has("batteryOne") && this.has("batteryTwo")){
+                    this.line1.setText('Peef: We just put these in the remote in just the right way, and its working good as new.');
+                    this.line2.setText('Greenpa: Thanks Peef. I just hope these batteries last longer this time.');
+                }
+                else if (!(this.has("needleOne")) || !(this.has("needleTwo"))) {
+                    this.line1.setText('Greenpa: Of course now the remote breaks. How long are we going to stuck watching factory documentaries.');
+                    this.line2.setText('Peef: Calm down, little guy. The remote probably needs fresh batteries again.');
                 }
             }
 
@@ -184,7 +199,7 @@ class TVRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

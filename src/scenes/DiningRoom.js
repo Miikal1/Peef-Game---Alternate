@@ -125,8 +125,6 @@ class DiningRoom extends Phaser.Scene {
 
         if(this.checkCollision(this.p1, this.stool) && this.p1.y <= this.stool.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
             this.p1.body.setVelocityY(-800);
-            console.log(this.p1.velocityY);
-            console.log("3");
         }
 
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
@@ -145,12 +143,12 @@ class DiningRoom extends Phaser.Scene {
             this.scene.switch('livingRoom');
         }
 
-        if (this.checkCollision(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+        if (this.checkCollision(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("needleOne");
             this.needleOne.destroy();
         }
 
-        if (this.checkCollision(this.p1, this.rope) && Phaser.Input.Keyboard.JustDown(this.keyT)){
+        if (this.checkCollision(this.p1, this.rope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("rope");
             this.rope.destroy();
         }
