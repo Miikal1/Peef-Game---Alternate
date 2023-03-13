@@ -5,11 +5,11 @@ class BathRoom extends Phaser.Scene {
 
     preload(){
 
-        this.load.image('bathRoom', "assets/bathRoom.png");
+        this.load.image('bathroom', "assets/bathroom.png");
         this.load.image('testGround', "assets/testGround.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
-        this.load.image('bathRoomSink', "assets/bathRoomSink.png");
-        this.load.image('bathRoomTub', "assets/bathRoomTub.png");
+        this.load.image('bathroomSink', "assets/bathroomSink.png");
+        this.load.image('bathroomTub', "assets/bathroomTub.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('curie', "assets/curie.png");
         this.load.image('celly', "assets/celly.png");
@@ -33,7 +33,7 @@ class BathRoom extends Phaser.Scene {
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
 
-        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bathRoom').setOrigin(0,0);
+        this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bathroom').setOrigin(0,0);
 
         this.ground = this.physics.add.sprite(800, 864, 'testGround');
         this.ground.body.immovable = true;
@@ -41,11 +41,11 @@ class BathRoom extends Phaser.Scene {
 
         this.platforms = this.add.group();
 
-        this.sink = this.physics.add.sprite(376, 721, 'bathRoomSink');
+        this.sink = this.physics.add.sprite(376, 721, 'bathroomSink');
         this.sink.body.immovable = true;
         this.sink.body.allowGravity = false;
 
-        this.tub = this.physics.add.sprite(1252, 750, 'bathRoomTub');
+        this.tub = this.physics.add.sprite(1252, 750, 'bathroomTub');
         this.tub.body.immovable = true;
         this.tub.body.allowGravity = false;
 
