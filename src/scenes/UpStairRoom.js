@@ -167,20 +167,24 @@ class UpStairRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if (this.checkCollision(this.p1, this.sniffy) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+
+            if (this.checkCollision(this.p1, this.doorSide)) {
+                this.line1.setText('Peef: This door leads to the play room, where we play with toys, games, the like.');
+                this.line2.setText('Peef: Heh. Stuffed animals playing with toys. Who would have thought.');
+            }
+            
+            if (this.checkCollision(this.p1, this.sniffy)) {
+                this.line1.setText('Peef: Hey there, Sniffy. Your nose found anything cool today.');
+                this.line2.setText('Sniffy: Hi Peef. Well, some our friends smell pretty cool, but I hope to smell good perfume one day.');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -191,7 +195,7 @@ class UpStairRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

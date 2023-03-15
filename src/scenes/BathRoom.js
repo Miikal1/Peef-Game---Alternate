@@ -167,6 +167,14 @@ class BathRoom extends Phaser.Scene {
             this.talking = !this.talking;
         }
 
+        if ((this.checkCollision(this.p1, this.sink) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.tub) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.bloody)) {
                 if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
@@ -197,6 +205,16 @@ class BathRoom extends Phaser.Scene {
                     this.line1.setText('Peef: Hey Celly. I here you guys are getting close to becoming doctors.');
                     this.line2.setText('Celly: Yeah. We just need a med bag, a seringe, and a stephascope. Then we can set up shop.');
                 }
+            }
+
+            if (this.checkCollision(this.p1, this.sink)) {
+                this.line1.setText('Peef: Its the sink. Even the biggest of us are too small reach it.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.tub)) {
+                this.line1.setText('Peef: Its the bath tub. Though only stuffed animal sea creatures can stand getting wet, almost everyone has ideas for it.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {

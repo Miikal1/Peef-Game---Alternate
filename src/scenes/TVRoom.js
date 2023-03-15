@@ -168,6 +168,19 @@ class TVRoom extends Phaser.Scene {
             this.talking = !this.talking;
         }
 
+        if ((this.checkCollision(this.p1, this.cdCase) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.tvStand) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.remote) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talking = !this.talking;
+        }
+
+
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.greenbu)) {
                 if (this.has("batteryOne") && this.has("batteryTwo")){
@@ -191,6 +204,16 @@ class TVRoom extends Phaser.Scene {
                 }
             }
 
+            if (this.checkCollision(this.p1, this.cdCase)) {
+                this.line1.setText('Peef: Its the DVD cabinet. It has all our movies, most of which are animated.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.tvStand)) {
+                this.line1.setText('Peef: Its our TV. You cannot tell from this angle but its actually more modern than it looks.');
+                this.line2.setText('Peef: The stand underneath has our game consoles. An NES, SNES, N64, Game Cube, Wii. Hoping to get the next newest console someday.');
+            }
+
             if (this.keyA.isDown || this.keyD.isDown) {
                 this.p1.setVelocityX(0);
             }
@@ -198,6 +221,10 @@ class TVRoom extends Phaser.Scene {
                 this.p1.body.setVelocityY(0);
             }
 
+            if (this.checkCollision(this.p1, this.remote)) {
+                this.line1.setText('Peef: Its the remote to the TV. We mostly use it to switch between channels with childrens cartoons.');
+                this.line2.setText('');
+            }
             
         }
 

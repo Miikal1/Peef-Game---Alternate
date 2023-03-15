@@ -11,6 +11,7 @@ class Closet extends Phaser.Scene {
         this.load.image('closetDrawer', "assets/closetDrawer.png");
         this.load.image('closetPlatform', "assets/closetPlatform.png");
         this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('stool', "assets/stool.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('snowWing', "assets/snowWing.png");
         this.load.image('battery', "assets/battery.png");
@@ -65,6 +66,10 @@ class Closet extends Phaser.Scene {
         this.dresser.body.immovable = true;
         this.dresser.body.allowGravity = false;
 
+        this.stool = this.physics.add.sprite(470, 730, 'stool');
+        this.stool.body.immovable = true;
+        this.stool.body.allowGravity = false;
+
         this.doorLeft = this.physics.add.sprite(14.5, 735, 'clearDoor');
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
@@ -95,6 +100,7 @@ class Closet extends Phaser.Scene {
         this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
+        this.physics.add.collider(this.p1, this.stool);
         this.physics.add.collider(this.p1, this.platforms);
         this.physics.add.collider(this.battery, this.platforms);
 
@@ -132,6 +138,10 @@ class Closet extends Phaser.Scene {
         else {
             this.p1.setVelocityX(0);
             this.p1.anims.play('idle', true);
+        }
+
+        if(this.checkCollision(this.p1, this.stool) && this.p1.y <= this.stool.y && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+            this.p1.body.setVelocityY(-800);
         }
     
         if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW) && this.talking == false) {
@@ -180,20 +190,40 @@ class Closet extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if ((this.checkCollision(this.p1, this.snowWing)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if ((this.checkCollision(this.p1, this.dresser)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+        if ((this.checkCollision(this.p1, this.battery)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.snowWing)) {
+                this.line1.setText('Peef: Hey Snow-wing. Its cool enough for you in here, right?');
+                this.line2.setText('Snow-Wing: Oh, hey Peef. Yeah, its plenty cool in here. I think I may build a nest in this room.');
+            }
+
+            if (this.checkCollision(this.p1, this.dresser)) {
+                this.line1.setText('Peef: Its a dresser. Its full of clothes that are too big for any of us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.doorSide)) {
+                this.line1.setText('Peef: This door just leads to a smaller closet. Not sure why it needs a door.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.battery)) {
+                this.line1.setText('Peef: Its a battery. It can power electronics.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -204,7 +234,7 @@ class Closet extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

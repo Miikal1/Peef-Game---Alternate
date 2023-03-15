@@ -229,6 +229,46 @@ class LivingRoom extends Phaser.Scene {
             this.talking = !this.talking;
         }
 
+        if (this.checkCollision(this.p1, this.blueBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.magentaBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.greenBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.yellowBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.purpleBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.redBook) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.boardgame) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.ropeSpot) && !(this.has("rope")) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.spool) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.cards) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
                 if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
@@ -239,6 +279,56 @@ class LivingRoom extends Phaser.Scene {
                     this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
                     this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
                 }
+            }
+
+            if (this.checkCollision(this.p1, this.blueBook)) {
+                this.line1.setText('Peef: Its an instruction manual for the fishtank.');
+                this.line2.setText('');
+            }   
+            
+            if (this.checkCollision(this.p1, this.magentaBook)) {
+                this.line1.setText('Peef: This is a fantasy novel. I cannot say the title, I think its supposed to be elf launguage.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.greenBook)) {
+                this.line1.setText('Peef: Its a healthy recipe book. We do not really need it. As stuffed animals, we cannot gain weight.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.yellowBook)) {
+                this.line1.setText('Peef: Its a history book. We mostly find it boring, but the teddy bears being named after a president thing surprised some of us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.purpleBook)) {
+                this.line1.setText('Peef: Its a toy spell book. My favorite is the color changing spell. I could use it to decorate.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.redBook)) {
+                this.line1.setText('Peef: Its our scrapbook. We hope to fill it with memories once we get our paws on a camera.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.boardgame)) {
+                this.line1.setText('Peef: Its a stack of boardgames. Theres Battleship, Checkers, and a wooeden chess set.');
+                this.line2.setText('');
+            }
+
+            if ((this.checkCollision(this.p1, this.ropeSpot) && !(this.has("rope")))) {
+                this.line1.setText('Peef: I cannot jump up the shelf. I could use some rope to make a climbing structure.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.spool)) {
+                this.line1.setText('Peef: Its a spool of thread. There is not much left due to Stiches many rips. Gotta get more soon.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.cards)) {
+                this.line1.setText('Peef: Its a deck of cards. Plenty of games to be had and make up with these.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {

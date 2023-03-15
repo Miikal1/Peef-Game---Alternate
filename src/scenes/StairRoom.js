@@ -144,6 +144,9 @@ class StairRoom extends Phaser.Scene {
         this.physics.add.collider(this.p1, this.platforms);
         this.physics.add.collider(this.needleTwo, this.platforms);
 
+        this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
+        this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
+        
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('PeefSide', { start: 0, end: 7, first: 0}),
@@ -212,6 +215,42 @@ class StairRoom extends Phaser.Scene {
             this.p1.x = 314;
             this.scene.switch('fishTankRoom');
         }
+
+        //
+
+        if (this.checkCollision(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.needleTwo)) {
+                this.line1.setText('Peef: Its a sewing needle. We often go through at least two of these fixing just one of us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.doorSide)) {
+                this.line1.setText('Peef: This door leads to the fish tank room, where the fish toys like to hangout.');
+                this.line2.setText('Peef: They can breath on land, since they are stuffed animals, but they still like living in water.');
+            }
+
+            if (this.keyA.isDown || this.keyD.isDown) {
+                this.p1.setVelocityX(0);
+            }
+            if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+                this.p1.body.setVelocityY(0);
+            }
+
+            
+        }
+
+        if (this.talking == false){
+            this.line1.setText('');
+            this.line2.setText('');
+         }
 
     }
 

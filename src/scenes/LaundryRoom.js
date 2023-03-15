@@ -192,20 +192,49 @@ class LaundryRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if (this.checkCollision(this.p1, this.spikey) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if (this.checkCollision(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.washer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+        if (this.checkCollision(this.p1, this.dryer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.checkCollision(this.p1, this.bucket) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.spikey)) {
+                this.line1.setText('Spikey: Hey Peef. I was wondering, did I leave any spikes in the bed this morning.');
+                this.line2.setText('Peef: Hey Spikey. You did not leave any spikes or quills, or anything. You do not have to worry buddy.');
+            }
+
+            if (this.checkCollision(this.p1, this.shot)) {
+                this.line1.setText('Peef: Its a toy shot. It has a plastic ball on the end instead of a needle.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.washer)) {
+                this.line1.setText('Peef: Its the washing machine. Most of us are not machine washable, we do not use it.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.dryer)) {
+                this.line1.setText('Peef: Its the dryer. Sadly, its not a safe thrill ride for most of us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.bucket)) {
+                this.line1.setText('Peef: Its the washing bucket. Its how most of use get clean, with lots of soap and very careful scrubbing techniques.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -216,7 +245,8 @@ class LaundryRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
+
 
         if (this.talking == false){
             this.line1.setText('');

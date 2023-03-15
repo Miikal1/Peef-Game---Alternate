@@ -80,6 +80,9 @@ class DiningRoom extends Phaser.Scene {
         this.physics.add.collider(this.needleOne, this.platforms);
         this.physics.add.collider(this.rope, this.platforms);
 
+        this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
+        this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
+
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('PeefSide', { start: 0, end: 7, first: 0}),
@@ -153,9 +156,40 @@ class DiningRoom extends Phaser.Scene {
             this.rope.destroy();
         }
 
-        //if (Phaser.Input.Keyboard.JustDown(this.keyV)){
-        //    inventory.splice(inventory.indexOf("neeldeOne"));
-        //}
+        if (this.checkCollision(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.rope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.needleOne)) {
+                this.line1.setText('Peef: Its a sewing needle. We often go through at least two of these fixing just one of us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.rope)) {
+                this.line1.setText('Peef: Its a coil of rope. Its just strong enough to hold up a tiny climber like me.');
+                this.line2.setText('');
+            }
+
+            if (this.keyA.isDown || this.keyD.isDown) {
+                this.p1.setVelocityX(0);
+            }
+            if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
+                this.p1.body.setVelocityY(0);
+            }
+
+            
+        }
+
+        if (this.talking == false){
+            this.line1.setText('');
+            this.line2.setText('');
+         }
+
 
     }
 

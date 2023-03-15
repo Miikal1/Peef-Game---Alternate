@@ -184,20 +184,78 @@ class Kitchen extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if ((this.checkCollision(this.p1, this.magnaLegs)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if ((this.checkCollision(this.p1, this.fridge)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.drawerLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.drawerMid)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.drawerRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.oven)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.toaster)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.stephascope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.magnaLegs)) {
+                this.line1.setText('Peef: Hows the fridge felling Magnalegs?');
+                this.line2.setText('Magnalegs: Feeling alright Peef, though little dull sometimes. I wish we had more fridge magnets.');
+            }
+
+            if (this.checkCollision(this.p1, this.fridge)) {
+                this.line1.setText('Peef: This is the fridge. Magnalegs the stuffed lion fridge magnet likes to hang here.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.drawerRight)) {
+                this.line1.setText('Peef: This drawer is full of pots and mixing bolls. The smallest of us sometimes like to play in them.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.drawerMid)) {
+                this.line1.setText('Peef: This drawer is full of plates. We broke a bunch of them when we first moved in.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.drawerLeft)) {
+                this.line1.setText('Peef: This drawer has a big cake mixer in it. Only Jumbo can lift it.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.oven)) {
+                this.line1.setText('Peef: Its the oven. As we are all highly flamble, we try to never use it.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.toaster)) {
+                this.line1.setText('Peef: Its the toaster. Its less dangerous than the oven, so some of us do dare to use.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.stephascope)) {
+                this.line1.setText('Peef: Its a toy stephascope. Its mostly plastic, but the part that goes on chests is metal.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -208,7 +266,7 @@ class Kitchen extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

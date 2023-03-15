@@ -13,6 +13,7 @@ class FishTankRoom extends Phaser.Scene {
         this.load.image('tenticles', "assets/tenticles.png");
         this.load.image('battery', "assets/battery.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('interactionPoint', "assets/interactionPoint.png");
         this.load.image('testItem', "assets/testItem.png");
 
     }    
@@ -60,10 +61,18 @@ class FishTankRoom extends Phaser.Scene {
         this.sawtooth.body.immovable = true;
         this.sawtooth.body.allowGravity = false;
 
+        this.talkSawtooth = this.physics.add.sprite(260, 735, 'interactionPoint');
+        this.talkSawtooth.body.immovable = true;
+        this.talkSawtooth.body.allowGravity = false;
+
         this.tenticles = this.physics.add.sprite(1030, 440, 'tenticles');
         this.tenticles.setFlip(true, false);
         this.tenticles.body.immovable = true;
         this.tenticles.body.allowGravity = false;
+
+        this.talkTenticles = this.physics.add.sprite(1030, 735, 'interactionPoint');
+        this.talkTenticles.body.immovable = true;
+        this.talkTenticles.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -146,24 +155,32 @@ class FishTankRoom extends Phaser.Scene {
             
         }   
 
-        //if (Phaser.Input.Keyboard.JustDown(this.keyV)){
-        //    inventory.splice(inventory.indexOf("spool"));
-        //}
+        if (this.checkCollision(this.p1, this.talkSawtooth) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if (this.checkCollision(this.p1, this.talkTenticles) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if (this.checkCollision(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.talkSawtooth)) {
+                this.line1.setText('Sawtooth: Hey there Peef. Any chance your gonna play Adventurer later?');
+                this.line2.setText('Peef: I will be sure to let you know when we play next. You like pretending to be my sword, huh?');
+            }
+
+            if (this.checkCollision(this.p1, this.talkTenticles)) {
+                this.line1.setText('Tenitcles: Hey Peef. Thanks for the help with my flaps yesterday.');
+                this.line2.setText('Peef: Always happy to help a fellow stuffed animal. Even if they are a hand puppet octopus.');
+            }
+
+            if (this.checkCollision(this.p1, this.battery)) {
+                this.line1.setText('Peef: Its a battery. It can power electronics.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -174,7 +191,7 @@ class FishTankRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

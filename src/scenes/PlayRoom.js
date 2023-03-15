@@ -242,6 +242,45 @@ class PlayRoom extends Phaser.Scene {
             this.talking = !this.talking;
         }
 
+        if ((this.checkCollision(this.p1, this.bigChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.miniChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+        if ((this.checkCollision(this.p1, this.boardGame)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.dictionary)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.greenBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.redBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.purpleBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.legoCar)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.legoCastle)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.medBag)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.comander)) {
                 if (this.has("cards")){
@@ -256,13 +295,63 @@ class PlayRoom extends Phaser.Scene {
 
             if (this.checkCollision(this.p1, this.peefJR)) {
                 if (this.has("cards")){
-                    this.line1.setText('Peef Jr: So war is just card game. fuh! I was getting worried, *hugs Peef* ');
+                    this.line1.setText('Peef Jr: So war is just card game. whew! I was getting worried, *hugs Peef* ');
                     this.line2.setText('Peef: There there, JR. Its all okay. Now go fun!');
                 }
                 else if (!(this.has("cards"))) {
                     this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. And he keeps calling me soldier.');
                     this.line2.setText('Peef: Comander calls almost everyone that. Do not worry, I am pretty sure he doe not want to hurt you.');
                 }
+            }
+
+            if (this.checkCollision(this.p1, this.bigChest)) {
+                this.line1.setText('Peef : Its a huge toy chest. Mostly some RC cars and action figures, none of which are alive like us.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.miniChest)) {
+                this.line1.setText('Peef : Its a small toy chest. Its full of used lego set instructions.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.boardGame)) {
+                this.line1.setText('Peef : Its a stack of boardgames. Theres Shoots & Ladders, Candyland, and some unknown game in a metal box.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.dictionary)) {
+                this.line1.setText('Peef : Its a bunch of dictionaries. Only Smarty actually reads these for fun.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.greenBook)) {
+                this.line1.setText('Peef : This green book is my favorite. It tells of how I was made by Santa Claus.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.redBook)) {
+                this.line1.setText('Peef : Its a red picture book. It tells a story about lost bunny rabbits.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.purpleBook)) {
+                this.line1.setText('Peef : Its a purple story book. It has three different fairy tails.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.legoCar)) {
+                this.line1.setText('Peef : Its a lego set of a car.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.legoCastle)) {
+                this.line1.setText('Peef : Its a lego set of a castle.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.medBag)) {
+                this.line1.setText('Peef : Its a toy doctors bag. Its full of sealed bottles of plastic pills.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {

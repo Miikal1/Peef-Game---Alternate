@@ -11,6 +11,7 @@ class HallWay extends Phaser.Scene {
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('sticker', "assets/sticker.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('interactionPoint', "assets/interactionPoint.png");
         this.load.image('testItem', "assets/testItem.png");
 
     }    
@@ -63,6 +64,10 @@ class HallWay extends Phaser.Scene {
         this.sticker = this.physics.add.sprite(802, 335, 'sticker');
         this.sticker.body.immovable = true;
         this.sticker.body.allowGravity = false;
+
+        this.talkSticker = this.physics.add.sprite(802, 735, 'interactionPoint');
+        this.talkSticker.body.immovable = true;
+        this.talkSticker.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -153,20 +158,33 @@ class HallWay extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if ((this.checkCollision(this.p1, this.talkSticker)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+        if ((this.checkCollision(this.p1, this.doorSideLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.checkCollision(this.p1, this.doorSideRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if (this.talking == true){
+
+            if (this.checkCollision(this.p1, this.doorSideLeft)) {
+                this.line1.setText('Peef: This door leads to the laundry room. Its where most of us get clean.');
+                this.line2.setText('');
+            }
+
+            if (this.checkCollision(this.p1, this.talkSticker)) {
+                this.line1.setText('Peef: Hey Sticker. How goes the wall crawling?');
+                this.line2.setText('Sticker: going ok Peef. I am still looking for the fabled entrance to the attic.');
+            }
+
+            if (this.checkCollision(this.p1, this.doorSideRight)) {
+                this.line1.setText('Peef: This door leads to the bath room. we do not really use this place much.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -177,7 +195,7 @@ class HallWay extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');
