@@ -66,9 +66,8 @@ class DiningRoom extends Phaser.Scene {
         this.doorRight.body.immovable = true;
         this.doorRight.body.allowGravity = false;
         
-        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
-        this.p1.setFlip(true, false);
 
         this.stool = this.physics.add.sprite(1350, 730, 'stool');
         this.stool.body.immovable = true;

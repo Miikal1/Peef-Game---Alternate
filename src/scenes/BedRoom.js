@@ -10,9 +10,10 @@ class BedRoom extends Phaser.Scene {
         this.load.image('bedBox', "assets/bedBox.png");
         this.load.image('bedTop', "assets/bedTop.png");
         this.load.image('windowSillFront', "assets/windowSillFront.png");
-        this.load.image('couchCushion', "assets/couchCushion.png");
+        this.load.image('scally', "assets/scally.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('testItem', "assets/testItem.png");
 
     }    
@@ -71,6 +72,10 @@ class BedRoom extends Phaser.Scene {
 
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
+
+        this.scally = this.physics.add.sprite(120, 492, 'scally');
+        this.scally.body.immovable = true;
+        this.scally.body.allowGravity = false;
 
         this.p1 = this.physics.add.sprite(1300, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -165,20 +170,20 @@ class BedRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        //if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-        //    this.talking = !this.talking;
-        //}
+        if (this.checkCollision(this.p1, this.scally) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
 
-        /*if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
-                    this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
-                    this.line2.setText('Peef: Glad to help. I know how painful rips are.');
-                }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
+        if (this.talking == true){
+            if (this.checkCollision(this.p1, this.scally)) {
+                
+                    this.line1.setText('Scally: Having a good day Peef? I am here if you need to rest your head.');
+                    this.line2.setText('Peef: Thanks for the offer Scally, but I still got plenty to do today.');
+                
+                /*else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
                     this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
                     this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }
+                }*/
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -189,7 +194,7 @@ class BedRoom extends Phaser.Scene {
             }
 
             
-        }*/
+        }
 
         if (this.talking == false){
             this.line1.setText('');

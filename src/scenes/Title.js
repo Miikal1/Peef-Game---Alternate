@@ -38,7 +38,7 @@ class Title extends Phaser.Scene {
         }
 
         if (this.arrow.x == 300 && Phaser.Input.Keyboard.JustDown(this.keyW)){
-            this.scene.switch('livingRoom');
+            this.scene.switch('bedRoomTutorial');
         }
 
         if (this.arrow.x == 870 && Phaser.Input.Keyboard.JustDown(this.keyW)){

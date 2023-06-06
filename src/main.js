@@ -17,7 +17,7 @@ let config = {
     },
     width: 1600,
     height: 900,
-    scene: [Title, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, UpStairRoom, HallWay, WayEnd, BedRoom, Closet, BathRoom, LaundryRoom, PlayRoom, Credits]
+    scene: [Title, BedRoomTutorial, ClosetTutorial, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, UpStairRoom, HallWay, WayEnd, BedRoom, Closet, BathRoom, LaundryRoom, PlayRoom, Credits]
     //inventory: [null, null, null, null, null, null, null, null, null, null]
 };
 
@@ -27,6 +27,20 @@ let borderUISize = config.height / 15;
 let borderPadding = borderUISize / 3;
 
 let inventory = [];
+
+// quest status
+let tutorial = "inactive";
+let sewQuest = "inactive";
+let tvQuest = "inactive";
+let warQuest = "inactive";
+let doctorQuest = "inactive";
+
+// tutorial booleans
+let triedDoor = false;
+let askScally = false;
+let askSnowWing = false;
+let note = false;
+let foundKey = false;
 
 let game = new Phaser.Game(config);
 //game.config.inventory = [null, null, null, null, null, null, null, null, null, null];

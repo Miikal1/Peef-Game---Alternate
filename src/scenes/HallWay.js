@@ -11,6 +11,7 @@ class HallWay extends Phaser.Scene {
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('sticker', "assets/sticker.png");
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('interactionPoint', "assets/interactionPoint.png");
         this.load.image('testItem', "assets/testItem.png");
 
@@ -69,9 +70,8 @@ class HallWay extends Phaser.Scene {
         this.talkSticker.body.immovable = true;
         this.talkSticker.body.allowGravity = false;
 
-        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
-        this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);

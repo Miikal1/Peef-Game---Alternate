@@ -136,9 +136,8 @@ class StairRoom extends Phaser.Scene {
         this.doorSide.body.immovable = true;
         this.doorSide.body.allowGravity = false;
         
-        this.p1 = this.physics.add.sprite(1535, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(523, 32, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
-        this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.platforms);
@@ -250,7 +249,10 @@ class StairRoom extends Phaser.Scene {
         if (this.talking == false){
             this.line1.setText('');
             this.line2.setText('');
-         }
+        }
+
+        console.log(this.p1.x);
+        console.log(this.p1.y);
 
     }
 

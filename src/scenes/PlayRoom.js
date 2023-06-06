@@ -288,19 +288,19 @@ class PlayRoom extends Phaser.Scene {
                     this.line2.setText('Peef: Thank goodness you just ment the card game. Also, you do not have to call me general.');
                 }
                 else if (!(this.has("cards"))) {
-                    this.line1.setText('Comander: At ease, General. I am going to teach JR how to play War. Can you help find the supplies?');
+                    this.line1.setText('Comander: At ease, General. I am going to teach JR here how to play War. Can you help find the supplies?');
                     this.line2.setText('Peef: Uh, sure . . . We do not have guns in this house, right?');
                 }
             }
 
             if (this.checkCollision(this.p1, this.peefJR)) {
                 if (this.has("cards")){
-                    this.line1.setText('Peef Jr: So war is just card game. whew! I was getting worried, *hugs Peef* ');
-                    this.line2.setText('Peef: There there, JR. Its all okay. Now go fun!');
+                    this.line1.setText('Peef Jr: So war is just a card game. whew! I was getting worried, *hugs Peef* ');
+                    this.line2.setText('Peef: There there, JR. Its all okay. Now go have fun!');
                 }
                 else if (!(this.has("cards"))) {
                     this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. And he keeps calling me soldier.');
-                    this.line2.setText('Peef: Comander calls almost everyone that. Do not worry, I am pretty sure he doe not want to hurt you.');
+                    this.line2.setText('Peef: Comander calls almost everyone that. Do not worry, I am pretty sure he does not want to hurt you.');
                 }
             }
 

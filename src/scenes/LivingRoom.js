@@ -121,7 +121,7 @@ class LivingRoom extends Phaser.Scene {
         this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         this.goodLamb.setFlip(true, false);
 
-        this.p1 = this.physics.add.sprite(500, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.p1, this.ground);
