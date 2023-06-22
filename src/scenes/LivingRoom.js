@@ -117,9 +117,11 @@ class LivingRoom extends Phaser.Scene {
         this.cards = this.physics.add.sprite(580, 550, 'cardDeck');
         
         this.stiches = this.physics.add.sprite(1400, 730, 'stiches');
-
+        
         this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         this.goodLamb.setFlip(true, false);
+
+        this. talkCount = 0;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -209,11 +211,23 @@ class LivingRoom extends Phaser.Scene {
         if (this.checkCollision(this.p1, this.spool) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("spool");
             this.spool.destroy();
-        }   
+        } 
 
         if (this.checkCollision(this.p1, this.cards) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("cards");
             this.cards.destroy();
+        }
+        
+        if (this.talkCount == 2){
+            sewQuest = "active";
+        }
+
+        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+            sewQuest = "found";
+        }
+
+        if (this.talkCount >= 4 && sewQuest == "found"){
+            sewQuest = "complete";
         }   
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){
@@ -226,6 +240,7 @@ class LivingRoom extends Phaser.Scene {
         //}
 
         if ((this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
@@ -270,14 +285,41 @@ class LivingRoom extends Phaser.Scene {
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.goodLamb) || this.checkCollision(this.p1, this.stiches)) {
-                if (this.has("spool") && this.has("needleOne") && this.has("needleTwo")){
+            if (this.checkCollision(this.p1, this.goodLamb)) {
+                if (sewQuest == "inactive") {
+                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
+                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                }
+                else if(sewQuest == "active"){
+                    this.line1.setText('Good Lamb: Please hurry Peef. Stiches is in pain.');
+                    this.line2.setText('Peef: Do not panic, once I find some needles and thread I will be back.');
+                }
+                else if (sewQuest == "found"){
                     this.line1.setText('Good Lamb: Oh, thanks Peef! Now we can fix Stiches!');
                     this.line2.setText('Peef: Glad to help. I know how painful rips are.');
                 }
-                else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
+                else if (sewQuest == "complete"){
+                    this.line1.setText('Peef: Hey, Good Lamb. You and Stiches are doing great, I see.');
+                    this.line2.setText('Good Lamb: Well, I am always looking out for the girls in this house. Plus, Stiches likes my ear hugs.');
+                }
+            }
+
+            if (this.checkCollision(this.p1, this.stiches)) {
+                if (sewQuest == "inactive") {
+                    this.line1.setText('Stiches: Oooww. Ripped again, under the leg this time. Thats the third time this month.');
+                    this.line2.setText('Peef: Do not worry Stiches. I will go get some sewing supplies and we will fix you right up.');
+                }
+                else if(sewQuest == "active"){
+                    this.line1.setText('Stiches: Oooww. I am doing my best to hold my stuffing in. But it still hurts.');
+                    this.line2.setText('Peef: Your gonna be fine, Stiches. We will get you back together soon enough');
+                }
+                else if (sewQuest == "found"){
+                    this.line1.setText('Peef: I got the supplies, Stiches. Now, hold still. *Sews up the rip in Stiches*');
+                    this.line2.setText('Stiches: Thats much better. Thank you. *Nuzzles Peef*');
+                }
+                else if (sewQuest == "complete"){
+                    this.line1.setText('Stiches: Why am I constantly getting ripped. My tail came 4 times last month.');
+                    this.line2.setText('Peef: I know you pain. I have ripped before too. It hurts so much for stuffed animals.');
                 }
             }
 
@@ -336,6 +378,9 @@ class LivingRoom extends Phaser.Scene {
             }
             if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
                 this.p1.body.setVelocityY(0);
+            }
+            if(Phaser.Input.Keyboard.JustDown(this.keyR)) {
+                console.log(this.talkCount);
             }
 
             

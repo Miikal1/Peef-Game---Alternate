@@ -81,6 +81,8 @@ class TVRoom extends Phaser.Scene {
         this.greenpa.body.immovable = true;
         this.greenpa.body.allowGravity = false;
 
+        this. talkCount = 0;
+
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
         this.p1.setFlip(true, false);
@@ -138,6 +140,23 @@ class TVRoom extends Phaser.Scene {
             this.scene.switch('frontDoorRoom');
         }
 
+        if (this.talkCount == 2){
+            tvQuest = "active";
+        }
+
+        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+            tvQuest = "found";
+        }
+
+        if (this.talkCount >= 4 && sewQuest == "found"){
+            tvQuest = "complete";
+        }   
+        
+        if (Phaser.Input.Keyboard.JustDown(this.keyG)){
+            console.log(this.talking);
+            
+        }   
+
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
             if (this.has("rope")){
                 this.takeOut("rope");
@@ -161,10 +180,12 @@ class TVRoom extends Phaser.Scene {
         //}
 
         if ((this.checkCollision(this.p1, this.greenbu) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
         if ((this.checkCollision(this.p1, this.greenpa) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
@@ -183,24 +204,40 @@ class TVRoom extends Phaser.Scene {
 
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.greenbu)) {
-                if (this.has("batteryOne") && this.has("batteryTwo")){
+                if (tvQuest == "inactive") {
+                    this.line1.setText('Peef: Enjoying the show, kids?');
+                    this.line2.setText('Greenbu: Oh, hey Peef. Not really. We want to change channel but the remotes not working. I think the batteries are dead.');
+                }
+                else if (tvQuest == "active"){
+                    this.line1.setText('Greenbu: You found batteries yet, Peef? This show is very boring.');
+                    this.line2.setText('Peef: Factory documentaries do get boring after a while. Once I find batteries I will be back.');
+                }
+                else if (tvQuest == "found"){
                     this.line1.setText('Greenbu: Thanks for the batteries, Peef. Now to find some good cartoons.');
                     this.line2.setText('Peef: Have fun. Tell me your recommendations latter.');
                 }
-                else if (!(this.has("batteryOne")) || !(this.has("batterTwo"))) {
-                    this.line1.setText('Peef: Enjoying the show, kids?');
-                    this.line2.setText('Greenbu: Oh, hey Peef. Not really. We want to change channel but the remotes not working.');
+                else if (tvQuest == "complete"){
+                    this.line1.setText('Peef: Find any good cartoons, kids?');
+                    this.line2.setText('Greenbu: Well, there is plenty of good Spongebob today. Also, the Pokemon show was on. Good stuff.');
                 }
             }
 
             if (this.checkCollision(this.p1, this.greenpa)) {
-                if (this.has("batteryOne") && this.has("batteryTwo")){
+                if (tvQuest == "inactive") {
+                    this.line1.setText('Greenpa: Of course now the remote breaks. How long are we going to stuck watching factory documentaries.');
+                    this.line2.setText('Peef: Calm down, little guy. The remote probably needs fresh batteries again.');
+                }
+                else if (tvQuest == "active"){
+                    this.line1.setText('Greenpa: This show is snooze fest. Why does the TV not have emergency channel nobs.');
+                    this.line2.setText('Peef: I do not this counts as an emergency. I will bring batteries once I find them.');
+                }
+                else if (tvQuest == "found"){
                     this.line1.setText('Peef: We just put these in the remote in just the right way, and its working good as new.');
                     this.line2.setText('Greenpa: Thanks Peef. I just hope these batteries last longer this time.');
                 }
-                else if (!(this.has("batterOne")) || !(this.has("batteryTwo"))) {
-                    this.line1.setText('Greenpa: Of course now the remote breaks. How long are we going to stuck watching factory documentaries.');
-                    this.line2.setText('Peef: Calm down, little guy. The remote probably needs fresh batteries again.');
+                else if (tvQuest == "complete"){
+                    this.line1.setText('Greenpa: While looking around we did find a movie, but it was the one about evil army action figures.');
+                    this.line2.setText('Peef: Uhg. Why do so many movies with living toys portray us as evil. At least that flick has good toys as well.');
                 }
             }
 

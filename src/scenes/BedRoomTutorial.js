@@ -55,10 +55,6 @@ class BedRoomTutorial extends Phaser.Scene {
         this.windowSill.body.allowGravity = false;
         this.platforms.add(this.windowSill);
 
-        this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
-        this.doorRight.body.immovable = true;
-        this.doorRight.body.allowGravity = false;
-
         this.doorSide = this.physics.add.sprite(1307, 735, 'sideDoor');
         this.doorSide.body.immovable = true;
         this.doorSide.body.allowGravity = false;
@@ -135,9 +131,15 @@ class BedRoomTutorial extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
-            this.p1.x = 1535;
-            this.scene.switch('closetTutorial');
+        //
+        if (askScally == true){
+            this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
+            this.doorRight.body.immovable = true;
+            this.doorRight.body.allowGravity = false;
+             if (this.checkCollision(this.p1, this.doorRight)){
+                this.p1.x = 1535;
+                this.scene.switch('closetTutorial');
+            }
         }
 
         if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR) && tutorial == "complete"){

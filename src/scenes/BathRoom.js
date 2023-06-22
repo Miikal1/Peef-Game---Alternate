@@ -76,6 +76,8 @@ class BathRoom extends Phaser.Scene {
         this.celly.body.immovable = true;
         this.celly.body.allowGravity = false;
 
+        this. talkCount = 0;
+
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
         this.p1.setFlip(true, false);
@@ -128,6 +130,23 @@ class BathRoom extends Phaser.Scene {
             this.scene.switch('hallWay');
         }
 
+        if (this.talkCount == 2){
+            doctorQuest = "active";
+        }
+
+        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+            doctorQuest = "found";
+        }
+
+        if (this.talkCount >= 4 && sewQuest == "found"){
+            doctorQuest = "complete";
+        }   
+        
+        if (Phaser.Input.Keyboard.JustDown(this.keyG)){
+            console.log(this.talking);
+            
+        }   
+
         //if (this.checkCollision(this.p1, this.doorRight)){
         //    this.p1.x = 1535;
         //    this.scene.switch('livingRoom');
@@ -156,14 +175,17 @@ class BathRoom extends Phaser.Scene {
         //}
 
         if ((this.checkCollision(this.p1, this.curie) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
         if ((this.checkCollision(this.p1, this.celly) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
         if ((this.checkCollision(this.p1, this.bloody) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
@@ -177,33 +199,57 @@ class BathRoom extends Phaser.Scene {
 
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.bloody)) {
-                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
-                    this.line1.setText('Bloody: Thanks for the help. We will be helping everyone in the house soon enough.');
-                    this.line2.setText('Peef: Have fun living the dream, doctors.');
-                }
-                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                if (doctorQuest == "inactive") {
                     this.line1.setText('Bloody: Hey Peef. Guess what? We are so close to reaching are dream of medicine practice. We just need a little more supplies.');
                     this.line2.setText('Peef: I have been happy to support your dream. And I am happy to help to.');
                 }
+                else if (doctorQuest == "active"){
+                    this.line1.setText('Peef: I gotta ask, how are you gonna be doctors when only Celly has arms?.');
+                    this.line2.setText('Bloody: Celly says she will do most of the hand work, but we are all ready to do what we can.');
+                }
+                else if (doctorQuest == "found"){
+                    this.line1.setText('Bloody: Thanks for the help. We will be helping everyone in the house soon enough.');
+                    this.line2.setText('Peef: Have fun living the dream, doctors.');
+                }
+                else if (doctorQuest == "complete"){
+                    this.line1.setText('Peef: Hey Bloody. How is being a doctor working out?');
+                    this.line2.setText('Bloody: Pretty good. Celly has to help me put it on, but I am getting really good at using the stephascope.');
+                }
             }
             if (this.checkCollision(this.p1, this.curie)) {
-                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
-                    this.line1.setText('Curie: You got everything?! Thank you Peef! Dreams are coming true!');
-                    this.line2.setText('Peef: Nice to see you so happy. Good luck doctors.');
-                }
-                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                if (doctorQuest == "inactive") {
                     this.line1.setText('Peef: Hey Curie. You and the cells still trying to become doctors?');
                     this.line2.setText('Curie: We sure are, Peef! We just need a few more supplies. We will be the best healers ever!');
                 }
+                else if (doctorQuest == "active"){
+                    this.line1.setText('Curie: Have you found the supplies yet. I would look myself, but I struggle to move around.');
+                    this.line2.setText('Peef: Its understandable for a plushie bottle of covid vaccine. But you have great friends in a pair of red and white blood cells.');
+                }
+                else if (doctorQuest == "found"){
+                    this.line1.setText('Curie: You got everything?! Thank you Peef! Dreams are coming true!');
+                    this.line2.setText('Peef: Nice to see you so happy. Good luck doctors.');
+                }
+                else if (doctorQuest == "complete"){
+                    this.line1.setText('Curie: Hey Peef. Need a check up? I am happy help.');
+                    this.line2.setText('Peef: I feel just fine, thank you. But you really do sound like a doctor, Curie.');
+                }
             }
             if (this.checkCollision(this.p1, this.celly)) {
-                if (this.has("medBag") && this.has("shot") && this.has("stephascope")){
-                    this.line1.setText('Celly: Thats everything we need. Now we can set up our office.');
-                    this.line2.setText('Celly: Plushies of a red blood cell, white blood cell, and a bottle of Covid vaccine working as doctors. Sure to be a success.');
-                }
-                else if (!(this.has("medBag")) || !(this.has("shot")) || !(this.has("stephascope"))) {
+                if (doctorQuest == "inactive") {
                     this.line1.setText('Peef: Hey Celly. I here you guys are getting close to becoming doctors.');
                     this.line2.setText('Celly: Yeah. We just need a med bag, a seringe, and a stephascope. Then we can set up shop.');
+                }
+                else if (doctorQuest == "active"){
+                    this.line1.setText('Peef: What do you guys need to set up your doctors office?');
+                    this.line2.setText('Celly: Standard doctor equipment. A med bag, a stephascope, and seringe, better known as a shot.');
+                }
+                else if (doctorQuest == "found"){
+                    this.line1.setText('Celly: Thats everything we need. Now we can set up our office.');
+                    this.line2.setText('Peef: Plushies of a red blood cell, white blood cell, and a bottle of Covid vaccine working as doctors. Sure to be a success.');
+                }
+                else if (doctorQuest == "complete"){
+                    this.line1.setText('Celly: I do the lifting, while Curie and Bloody handle diagnosis and comfort patients. We are the perfect team.');
+                    this.line2.setText('Peef: Glad to know you guys have a great working relationship.');
                 }
             }
 

@@ -140,6 +140,8 @@ class PlayRoom extends Phaser.Scene {
         this.peefJR.body.immovable = true;
         this.peefJR.body.allowGravity = false;
 
+        this. talkCount = 0;
+
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
         this.p1.setFlip(true, false);
@@ -207,6 +209,23 @@ class PlayRoom extends Phaser.Scene {
             this.medBag.destroy();
         }
 
+        if (this.talkCount == 2){
+            warQuest = "active";
+        }
+
+        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+            warQuest = "found";
+        }
+
+        if (this.talkCount >= 4 && sewQuest == "found"){
+            warQuest = "complete";
+        }   
+        
+        if (Phaser.Input.Keyboard.JustDown(this.keyG)){
+            console.log(this.talking);
+            
+        }   
+
         //if (this.checkCollision(this.p1, this.doorRight)){
         //    this.p1.x = 1535;
         //    this.scene.switch('livingRoom');
@@ -235,10 +254,12 @@ class PlayRoom extends Phaser.Scene {
         //}
 
         if (this.checkCollision(this.p1, this.comander) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
         if ((this.checkCollision(this.p1, this.peefJR)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
@@ -283,24 +304,40 @@ class PlayRoom extends Phaser.Scene {
 
         if (this.talking == true){
             if (this.checkCollision(this.p1, this.comander)) {
-                if (this.has("cards")){
-                    this.line1.setText('Comander: Thank you, general. Now then, soldier, you start the game with . . .');
-                    this.line2.setText('Peef: Thank goodness you just ment the card game. Also, you do not have to call me general.');
-                }
-                else if (!(this.has("cards"))) {
+                if (warQuest == "inactive") {
                     this.line1.setText('Comander: At ease, General. I am going to teach JR here how to play War. Can you help find the supplies?');
                     this.line2.setText('Peef: Uh, sure . . . We do not have guns in this house, right?');
+                }
+                else if (warQuest == "active") {
+                    this.line1.setText('Comander: Have you found the war supplies yet, general?');
+                    this.line2.setText('Peef: I am still looking for them. Also, you do not have to call me general.');
+                }
+                else if (warQuest == "found"){
+                    this.line1.setText('Comander: Thank you, General. Now then, soldier, you start the game with . . .');
+                    this.line2.setText('Peef: Thank goodness, you just ment the card game. Remember to have fun, Comander.');
+                }
+                else if (warQuest == "complete"){
+                    this.line1.setText('Comander: Greetings, General. JR is doing great in this game. You teach him well.');
+                    this.line2.setText('Peef: You know, just because I am the house leader does not mean you have to call me general.');
                 }
             }
 
             if (this.checkCollision(this.p1, this.peefJR)) {
-                if (this.has("cards")){
+                if (warQuest == "inactive") {
+                    this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. Thats a harmless game, right?');
+                    this.line2.setText('Peef: Do not worry, I am pretty sure he does not want to hurt you. He probably wants me to get him supplies.');
+                }
+                else if (warQuest == "active") {
+                    this.line1.setText('Peef JR: I am kinda nervous Peef. I have heard lots of bad things about war.');
+                    this.line2.setText('Peef: I doubt Comander really means war. I just gotta figure out what he needs.');
+                }
+                else if (warQuest == "found"){
                     this.line1.setText('Peef Jr: So war is just a card game. whew! I was getting worried, *hugs Peef* ');
                     this.line2.setText('Peef: There there, JR. Its all okay. Now go have fun!');
                 }
-                else if (!(this.has("cards"))) {
-                    this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. And he keeps calling me soldier.');
-                    this.line2.setText('Peef: Comander calls almost everyone that. Do not worry, I am pretty sure he does not want to hurt you.');
+                else if (warQuest == "complete"){
+                    this.line1.setText('Peef JR: This is actually kinda fun. But for some reason, Comander keeps calling me soldier.');
+                    this.line2.setText('Peef: Comander calls everyone that, execpt for me. He calls me general.');
                 }
             }
 
