@@ -31,6 +31,7 @@ class BedRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bedRoom').setOrigin(0,0);
 
@@ -102,11 +103,11 @@ class BedRoom extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
-
-        console.log(this.checkCollision(this.p1, this.box));
 
         if(this.keyA.isDown && this.talking == false) {
             this.p1.setVelocityX(-270);
@@ -133,14 +134,18 @@ class BedRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('closet');
         }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if (this.physics.overlap(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             this.p1.x = 1300;
             this.scene.switch('wayEnd');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
         }
 
         //if (this.checkCollision(this.p1, this.doorRight)){
@@ -170,20 +175,14 @@ class BedRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if (this.checkCollision(this.p1, this.scally) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.scally) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.scally)) {
-                
-                    this.line1.setText('Scally: Having a good day Peef? I am here if you need to rest your head.');
-                    this.line2.setText('Peef: Thanks for the offer Scally, but I still got plenty to do today.');
-                
-                /*else if (!(this.has("spool")) || !(this.has("needleOne")) || !(this.has("needleTwo"))) {
-                    this.line1.setText('Good Lamb: Help! Stiches ripped herself again! Can you get the sewing supplies?');
-                    this.line2.setText('Peef: Oh gosh! Sit tight Stiches. Ill be back soon!');
-                }*/
+            if (this.physics.overlap(this.p1, this.scally)) {
+                this.line1.setText('Scally: Having a good day Peef? I am here if you need to rest your head.');
+                this.line2.setText('Peef: Thanks for the offer Scally, but I still got plenty to do today.');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -218,7 +217,7 @@ class BedRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

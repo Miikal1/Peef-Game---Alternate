@@ -34,6 +34,7 @@ class LaundryRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'laundryRoom').setOrigin(0,0);
 
@@ -96,7 +97,7 @@ class LaundryRoom extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.spikey = this.physics.add.sprite(630, 748, 'spikey');
+        this.spikey = this.physics.add.sprite(1270, 748, 'spikey');
         this.spikey.body.immovable = true;
         this.spikey.body.allowGravity = false;
 
@@ -125,6 +126,8 @@ class LaundryRoom extends Phaser.Scene {
             key: 'idle',
             frames: [{key: 'PeefSide', frame: 0}],
         });
+
+        gloabalGameState.currentScene = this.scene.key;
 
     }
 
@@ -155,12 +158,15 @@ class LaundryRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('hallWay');
         }
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
 
-        if (this.checkCollision(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if (this.physics.overlap(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("shot");
             this.shot.destroy();
         }
@@ -192,47 +198,47 @@ class LaundryRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if (this.checkCollision(this.p1, this.spikey) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.spikey) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if (this.checkCollision(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.shot) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if (this.checkCollision(this.p1, this.washer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.washer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
-        if (this.checkCollision(this.p1, this.dryer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.dryer) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if (this.checkCollision(this.p1, this.bucket) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.bucket) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.spikey)) {
+            if (this.physics.overlap(this.p1, this.spikey)) {
                 this.line1.setText('Spikey: Hey Peef. I was wondering, did I leave any spikes in the bed this morning.');
                 this.line2.setText('Peef: Hey Spikey. You did not leave any spikes or quills, or anything. You do not have to worry buddy.');
             }
 
-            if (this.checkCollision(this.p1, this.shot)) {
+            if (this.physics.overlap(this.p1, this.shot)) {
                 this.line1.setText('Peef: Its a toy shot. It has a plastic ball on the end instead of a needle.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.washer)) {
+            if (this.physics.overlap(this.p1, this.washer)) {
                 this.line1.setText('Peef: Its the washing machine. Most of us are not machine washable, we do not use it.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.dryer)) {
+            if (this.physics.overlap(this.p1, this.dryer)) {
                 this.line1.setText('Peef: Its the dryer. Sadly, its not a safe thrill ride for most of us.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.bucket)) {
+            if (this.physics.overlap(this.p1, this.bucket)) {
                 this.line1.setText('Peef: Its the washing bucket. Its how most of use get clean, with lots of soap and very careful scrubbing techniques.');
                 this.line2.setText('');
             }
@@ -270,7 +276,7 @@ class LaundryRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

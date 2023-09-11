@@ -32,6 +32,7 @@ class Kitchen extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'kitchen').setOrigin(0,0);
 
@@ -120,6 +121,8 @@ class Kitchen extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -152,12 +155,16 @@ class Kitchen extends Phaser.Scene {
         //    this.scene.switch('livingRoom');
         //}
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('stairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.stephascope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
+
+        if (this.physics.overlap(this.p1, this.stephascope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("stephascope");
             this.stephascope.destroy();
         }
@@ -184,76 +191,76 @@ class Kitchen extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if ((this.checkCollision(this.p1, this.magnaLegs)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.magnaLegs)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.fridge)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.fridge)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.drawerLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.drawerLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.drawerMid)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.drawerMid)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.drawerRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.drawerRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.oven)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.oven)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.toaster)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.toaster)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.stephascope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.stephascope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.magnaLegs)) {
+            if (this.physics.overlap(this.p1, this.magnaLegs)) {
                 this.line1.setText('Peef: Hows the fridge felling Magnalegs?');
                 this.line2.setText('Magnalegs: Feeling alright Peef, though little dull sometimes. I wish we had more fridge magnets.');
             }
 
-            if (this.checkCollision(this.p1, this.fridge)) {
+            if (this.physics.overlap(this.p1, this.fridge)) {
                 this.line1.setText('Peef: This is the fridge. Magnalegs the stuffed lion fridge magnet likes to hang here.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.drawerRight)) {
+            if (this.physics.overlap(this.p1, this.drawerRight)) {
                 this.line1.setText('Peef: This drawer is full of pots and mixing bolls. The smallest of us sometimes like to play in them.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.drawerMid)) {
+            if (this.physics.overlap(this.p1, this.drawerMid)) {
                 this.line1.setText('Peef: This drawer is full of plates. We broke a bunch of them when we first moved in.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.drawerLeft)) {
+            if (this.physics.overlap(this.p1, this.drawerLeft)) {
                 this.line1.setText('Peef: This drawer has a big cake mixer in it. Only Jumbo can lift it.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.oven)) {
+            if (this.physics.overlap(this.p1, this.oven)) {
                 this.line1.setText('Peef: Its the oven. As we are all highly flamble, we try to never use it.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.toaster)) {
+            if (this.physics.overlap(this.p1, this.toaster)) {
                 this.line1.setText('Peef: Its the toaster. Its less dangerous than the oven, so some of us do dare to use.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.stephascope)) {
+            if (this.physics.overlap(this.p1, this.stephascope)) {
                 this.line1.setText('Peef: Its a toy stephascope. Its mostly plastic, but the part that goes on chests is metal.');
                 this.line2.setText('');
             }
@@ -290,7 +297,7 @@ class Kitchen extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

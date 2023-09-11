@@ -17,16 +17,17 @@ let config = {
     },
     width: 1600,
     height: 900,
-    scene: [Title, BedRoomTutorial, ClosetTutorial, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, UpStairRoom, HallWay, WayEnd, BedRoom, Closet, BathRoom, LaundryRoom, PlayRoom, Credits]
-    //inventory: [null, null, null, null, null, null, null, null, null, null]
+    scene: [Title, BedRoomTutorial, Inventory, ClosetTutorial, LivingRoom, DiningRoom, StairRoom, TVRoom, Kitchen, FrontDoorRoom, FishTankRoom, UpStairRoom, HallWay, WayEnd, BedRoom, Closet, BathRoom, LaundryRoom, PlayRoom, Credits]
 };
 
-let keyA, keyD, keyW, keyR, keyT, keyG, keyV;
+let keyA, keyD, keyW, keyS, keyR, keyT, keyQ, keyG;
 
 let borderUISize = config.height / 15;
 let borderPadding = borderUISize / 3;
 
 let inventory = [];
+
+let gloabalGameState = {};
 
 // quest status
 let tutorial = "inactive";
@@ -41,6 +42,9 @@ let askScally = false;
 let askSnowWing = false;
 let note = false;
 let foundKey = false;
+
+// sewQuest booleans
+let ropeLadder = false;
 
 let game = new Phaser.Game(config);
 //game.config.inventory = [null, null, null, null, null, null, null, null, null, null];

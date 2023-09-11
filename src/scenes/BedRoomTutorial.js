@@ -13,6 +13,7 @@ class BedRoomTutorial extends Phaser.Scene {
         this.load.image('scally', "assets/scally.png");
         this.load.spritesheet('PeefSide', "assets/PeefSide.png", {frameWidth: 50, frameHeight: 60, startFrame: 0, endFrame: 7});
         this.load.image('clearDoor', "assets/clearDoor.png");
+        this.load.image('door', "assets/door.png");
         this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('testItem', "assets/testItem.png");
         this.load.image('key', "assets/key.png");
@@ -31,7 +32,7 @@ class BedRoomTutorial extends Phaser.Scene {
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
-        this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bedRoom').setOrigin(0,0);
 
@@ -58,6 +59,11 @@ class BedRoomTutorial extends Phaser.Scene {
         this.doorSide = this.physics.add.sprite(1307, 735, 'sideDoor');
         this.doorSide.body.immovable = true;
         this.doorSide.body.allowGravity = false;
+
+        this.door = this.physics.add.sprite(1307, 440, 'door');
+        this.door.body.immovable = true;
+        this.door.body.allowGravity = false;
+        this.door.setAlpha(0.5);
 
         //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
         //this.doorRight.body.immovable = true;
@@ -102,6 +108,8 @@ class BedRoomTutorial extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -136,19 +144,24 @@ class BedRoomTutorial extends Phaser.Scene {
             this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
             this.doorRight.body.immovable = true;
             this.doorRight.body.allowGravity = false;
-             if (this.checkCollision(this.p1, this.doorRight)){
+             if (this.physics.overlap(this.p1, this.doorRight)){
                 this.p1.x = 1535;
                 this.scene.switch('closetTutorial');
             }
         }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR) && tutorial == "complete"){
+        if (this.physics.overlap(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR) && this.has("key")){
             this.p1.x = 1300;
+            tutorial = "complete";
             this.scene.switch('wayEnd');
         }
 
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT) && (tutorial == "inactive" || tutorial == "active")){
+
+        if (this.physics.overlap(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyT) && (tutorial == "inactive" || tutorial == "active")){
             if (tutorial == "inactive" && this.talking == true){
                 tutorial = "active";
                 triedDoor = true;
@@ -175,15 +188,14 @@ class BedRoomTutorial extends Phaser.Scene {
            
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){
-            console.log(this.talking);
-            
+            console.log(this.talking);  
         }   
 
         //if (Phaser.Input.Keyboard.JustDown(this.keyV)){
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if (this.checkCollision(this.p1, this.scally) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.scally) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
@@ -195,21 +207,20 @@ class BedRoomTutorial extends Phaser.Scene {
         }
 
         if (this.keyExist == true){
-            if (this.checkCollision(this.p1, this.key) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+            if (this.physics.overlap(this.p1, this.key) && Phaser.Input.Keyboard.JustDown(this.keyR)){
                 inventory.push("key");
                 this.key.destroy();
-                tutorial = "complete";
                 foundKey = true;
             }
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.scally) && tutorial == "inactive") {
+            if (this.physics.overlap(this.p1, this.scally) && tutorial == "inactive") {
                 this.line1.setText('Scally: Good Morning, Peef!.');
                 this.line2.setText('Peef: Morning Scally. Time to start the day.');
             }
 
-            if (this.checkCollision(this.p1, this.scally) && tutorial == "active") {
+            if (this.physics.overlap(this.p1, this.scally) && tutorial == "active") {
                 this.line1.setText('Peef: Hey Scally. The bedroom door is locked. Any chance you know where it is');
                 this.line2.setText('Scally: Locked. Sorry Peef, I got no clue. But maybe Snow-Wing does. She is to the right, in the closet.');
                 if (askScally == false){
@@ -217,12 +228,12 @@ class BedRoomTutorial extends Phaser.Scene {
                 }
             }
 
-            if(this.checkCollision(this.p1, this.doorSide) && tutorial == "inactive"){
+            if(this.physics.overlap(this.p1, this.doorSide) && tutorial == "inactive"){
                 this.line1.setText('Peef: Huh? What the? *repeatedly tries to open the door*');
                 this.line2.setText('Peef: The doors locked? Since when do we lock this door? Maybe Scally knows something.');
             }
 
-            if(this.checkCollision(this.p1, this.doorSide) && tutorial == "active"){
+            if(this.physics.overlap(this.p1, this.doorSide) && tutorial == "active"){
                 this.line1.setText('Peef: This door to the hall is locked. I guess I need a key.');
                 this.line2.setText('');
             }
@@ -254,11 +265,11 @@ class BedRoomTutorial extends Phaser.Scene {
         }
 
         if (foundKey == true){
-            this.instructions.setText('You have the key, now to open the door, Press R at the door to go through');
+            this.instructions.setText('You have the key, Pres Q to open the inventory or press R at the door to go through');
         }
 
-        console.log(this.p1.x);
-        console.log(this.p1.y);
+        //console.log(this.p1.x);
+        //console.log(this.p1.y);
 
     }
 
@@ -277,7 +288,7 @@ class BedRoomTutorial extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

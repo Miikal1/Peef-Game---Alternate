@@ -34,6 +34,7 @@ class Closet extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'closet').setOrigin(0,0);
 
@@ -122,6 +123,8 @@ class Closet extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -149,12 +152,16 @@ class Closet extends Phaser.Scene {
             this.p1.body.setVelocityY(-560);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('bedRoom');
         }
 
-        if (this.checkCollision(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
+
+        if (this.physics.overlap(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("batteryOne");
             this.battery.destroy();
         }
@@ -191,38 +198,38 @@ class Closet extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if ((this.checkCollision(this.p1, this.snowWing)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.snowWing)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.dresser)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.dresser)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
-        if ((this.checkCollision(this.p1, this.battery)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.battery)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.snowWing)) {
+            if (this.physics.overlap(this.p1, this.snowWing)) {
                 this.line1.setText('Peef: Hey Snow-wing. Its cool enough for you in here, right?');
                 this.line2.setText('Snow-Wing: Oh, hey Peef. Yeah, its plenty cool in here. I think I may build a nest in this room.');
             }
 
-            if (this.checkCollision(this.p1, this.dresser)) {
+            if (this.physics.overlap(this.p1, this.dresser)) {
                 this.line1.setText('Peef: Its a dresser. Its full of clothes that are too big for any of us.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.doorSide)) {
+            if (this.physics.overlap(this.p1, this.doorSide)) {
                 this.line1.setText('Peef: This door just leads to a smaller closet. Not sure why it needs a door.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.battery)) {
+            if (this.physics.overlap(this.p1, this.battery)) {
                 this.line1.setText('Peef: Its a battery. It can power electronics.');
                 this.line2.setText('');
             }
@@ -259,7 +266,7 @@ class Closet extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

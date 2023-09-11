@@ -30,6 +30,7 @@ class HallWay extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'hallWay').setOrigin(0,0);
 
@@ -93,6 +94,8 @@ class HallWay extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -116,24 +119,26 @@ class HallWay extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('wayEnd');
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('upStairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorSideRight) && Phaser.Input.Keyboard.JustDown(this.keyR)){
-           
+        if (this.physics.overlap(this.p1, this.doorSideRight) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             this.scene.switch('bathRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorSideLeft) && Phaser.Input.Keyboard.JustDown(this.keyR)){
-           
+        if (this.physics.overlap(this.p1, this.doorSideLeft) && Phaser.Input.Keyboard.JustDown(this.keyR)){ 
             this.scene.switch('laundryRoom');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
         }
 
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
@@ -158,31 +163,31 @@ class HallWay extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if ((this.checkCollision(this.p1, this.talkSticker)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.talkSticker)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.doorSideLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.doorSideLeft)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.doorSideRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.doorSideRight)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
 
-            if (this.checkCollision(this.p1, this.doorSideLeft)) {
+            if (this.physics.overlap(this.p1, this.doorSideLeft)) {
                 this.line1.setText('Peef: This door leads to the laundry room. Its where most of us get clean.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.talkSticker)) {
+            if (this.physics.overlap(this.p1, this.talkSticker)) {
                 this.line1.setText('Peef: Hey Sticker. How goes the wall crawling?');
                 this.line2.setText('Sticker: going ok Peef. I am still looking for the fabled entrance to the attic.');
             }
 
-            if (this.checkCollision(this.p1, this.doorSideRight)) {
+            if (this.physics.overlap(this.p1, this.doorSideRight)) {
                 this.line1.setText('Peef: This door leads to the bath room. we do not really use this place much.');
                 this.line2.setText('');
             }
@@ -219,7 +224,7 @@ class HallWay extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

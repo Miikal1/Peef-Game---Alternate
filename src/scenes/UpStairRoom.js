@@ -32,6 +32,7 @@ class UpStairRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'upStairRoom').setOrigin(0,0);
 
@@ -108,6 +109,8 @@ class UpStairRoom extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -131,19 +134,22 @@ class UpStairRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('hallWay');
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('stairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
-           
+        if (this.physics.overlap(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){  
             this.scene.switch('playRoom');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
         }
 
         /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
@@ -160,7 +166,7 @@ class UpStairRoom extends Phaser.Scene {
            
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){
-            console.log(this.talking);
+            console.log(this.p1.x + " " + this.p1.y);
             
         }   
 
@@ -168,22 +174,22 @@ class UpStairRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if (this.checkCollision(this.p1, this.sniffy) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.sniffy) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
 
-            if (this.checkCollision(this.p1, this.doorSide)) {
+            if (this.physics.overlap(this.p1, this.doorSide)) {
                 this.line1.setText('Peef: This door leads to the play room, where we play with toys, games, the like.');
                 this.line2.setText('Peef: Heh. Stuffed animals playing with toys. Who would have thought.');
             }
             
-            if (this.checkCollision(this.p1, this.sniffy)) {
+            if (this.physics.overlap(this.p1, this.sniffy)) {
                 this.line1.setText('Peef: Hey there, Sniffy. Your nose found anything cool today.');
                 this.line2.setText('Sniffy: Hi Peef. Well, some our friends smell pretty cool, but I hope to smell good perfume one day.');
             }
@@ -223,7 +229,7 @@ class UpStairRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

@@ -29,6 +29,7 @@ class StairRoom extends Phaser.Scene {
         this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'stairRoom').setOrigin(0,0);
 
@@ -136,7 +137,7 @@ class StairRoom extends Phaser.Scene {
         this.doorSide.body.immovable = true;
         this.doorSide.body.allowGravity = false;
         
-        this.p1 = this.physics.add.sprite(523, 32, 'PeefSide');
+        this.p1 = this.physics.add.sprite(550, 32, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.p1, this.ground);
@@ -157,6 +158,8 @@ class StairRoom extends Phaser.Scene {
             key: 'idle',
             frames: [{key: 'PeefSide', frame: 0}],
         });
+
+        gloabalGameState.currentScene = this.scene.key;
 
     }
 
@@ -181,7 +184,7 @@ class StairRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
         
-        if (this.checkCollision(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if (this.physics.overlap(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("needleTwo");
             this.needleTwo.destroy();
         }
@@ -195,43 +198,50 @@ class StairRoom extends Phaser.Scene {
         //    this.scene.switch('stairRoom');
         //}
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('diningRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('kitchen');
         }
 
-        if (this.checkCollision(this.p1, this.doorUp)){
-            this.p1.x = 523;
+        if (this.physics.overlap(this.p1, this.doorUp)){
+            this.p1.x = 550;
             this.scene.switch('upStairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if (this.physics.overlap(this.p1, this.doorSide) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             this.p1.x = 314;
             this.scene.switch('fishTankRoom');
         }
 
-        //
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
 
-        if (this.checkCollision(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.needleTwo) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (Phaser.Input.Keyboard.JustDown(this.keyG)){
+            console.log(this.p1.x + " " + this.p1.y);
+            //console.log(this.talking);
+        } 
+
+        if ((this.physics.overlap(this.p1, this.doorSide)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.needleTwo)) {
+            if (this.physics.overlap(this.p1, this.needleTwo)) {
                 this.line1.setText('Peef: Its a sewing needle. We often go through at least two of these fixing just one of us.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.doorSide)) {
+            if (this.physics.overlap(this.p1, this.doorSide)) {
                 this.line1.setText('Peef: This door leads to the fish tank room, where the fish toys like to hangout.');
                 this.line2.setText('Peef: They can breath on land, since they are stuffed animals, but they still like living in water.');
             }

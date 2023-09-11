@@ -32,6 +32,7 @@ class TVRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'tvRoom').setOrigin(0,0);
 
@@ -82,6 +83,7 @@ class TVRoom extends Phaser.Scene {
         this.greenpa.body.allowGravity = false;
 
         this. talkCount = 0;
+        this.finished = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -107,6 +109,8 @@ class TVRoom extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -130,25 +134,29 @@ class TVRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('livingRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('frontDoorRoom');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
         }
 
         if (this.talkCount == 2){
             tvQuest = "active";
         }
 
-        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+        if (this.has("batteryOne") && this.has("batteryTwo") && tvQuest == "active"){
             tvQuest = "found";
         }
 
-        if (this.talkCount >= 4 && sewQuest == "found"){
+        if (this.talking == false && this.finished == true){
             tvQuest = "complete";
         }   
         
@@ -179,31 +187,31 @@ class TVRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if ((this.checkCollision(this.p1, this.greenbu) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.greenbu) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.greenpa) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.greenpa) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.cdCase) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.cdCase) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.tvStand) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.tvStand) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.remote) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.remote) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talking = !this.talking;
         }
 
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.greenbu)) {
+            if (this.physics.overlap(this.p1, this.greenbu)) {
                 if (tvQuest == "inactive") {
                     this.line1.setText('Peef: Enjoying the show, kids?');
                     this.line2.setText('Greenbu: Oh, hey Peef. Not really. We want to change channel but the remotes not working. I think the batteries are dead.');
@@ -215,6 +223,7 @@ class TVRoom extends Phaser.Scene {
                 else if (tvQuest == "found"){
                     this.line1.setText('Greenbu: Thanks for the batteries, Peef. Now to find some good cartoons.');
                     this.line2.setText('Peef: Have fun. Tell me your recommendations latter.');
+                    this.finished = true;
                 }
                 else if (tvQuest == "complete"){
                     this.line1.setText('Peef: Find any good cartoons, kids?');
@@ -222,7 +231,7 @@ class TVRoom extends Phaser.Scene {
                 }
             }
 
-            if (this.checkCollision(this.p1, this.greenpa)) {
+            if (this.physics.overlap(this.p1, this.greenpa)) {
                 if (tvQuest == "inactive") {
                     this.line1.setText('Greenpa: Of course now the remote breaks. How long are we going to stuck watching factory documentaries.');
                     this.line2.setText('Peef: Calm down, little guy. The remote probably needs fresh batteries again.');
@@ -234,6 +243,7 @@ class TVRoom extends Phaser.Scene {
                 else if (tvQuest == "found"){
                     this.line1.setText('Peef: We just put these in the remote in just the right way, and its working good as new.');
                     this.line2.setText('Greenpa: Thanks Peef. I just hope these batteries last longer this time.');
+                    this.finished = true;
                 }
                 else if (tvQuest == "complete"){
                     this.line1.setText('Greenpa: While looking around we did find a movie, but it was the one about evil army action figures.');
@@ -241,14 +251,19 @@ class TVRoom extends Phaser.Scene {
                 }
             }
 
-            if (this.checkCollision(this.p1, this.cdCase)) {
+            if (this.physics.overlap(this.p1, this.cdCase)) {
                 this.line1.setText('Peef: Its the DVD cabinet. It has all our movies, most of which are animated.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.tvStand)) {
+            if (this.physics.overlap(this.p1, this.tvStand)) {
                 this.line1.setText('Peef: Its our TV. You cannot tell from this angle but its actually more modern than it looks.');
                 this.line2.setText('Peef: The stand underneath has our game consoles. An NES, SNES, N64, Game Cube, Wii. Hoping to get the next newest console someday.');
+            }
+
+            if (this.physics.overlap(this.p1, this.remote)) {
+                this.line1.setText('Peef: Its the remote to the TV. We mostly use it to switch between channels with childrens cartoons.');
+                this.line2.setText('');
             }
 
             if (this.keyA.isDown || this.keyD.isDown) {
@@ -256,13 +271,7 @@ class TVRoom extends Phaser.Scene {
             }
             if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
                 this.p1.body.setVelocityY(0);
-            }
-
-            if (this.checkCollision(this.p1, this.remote)) {
-                this.line1.setText('Peef: Its the remote to the TV. We mostly use it to switch between channels with childrens cartoons.');
-                this.line2.setText('');
-            }
-            
+            }      
         }
 
         if (this.talking == false){
@@ -287,7 +296,7 @@ class TVRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

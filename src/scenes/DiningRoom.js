@@ -30,6 +30,7 @@ class DiningRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'diningRoom').setOrigin(0,0);
 
@@ -93,6 +94,8 @@ class DiningRoom extends Phaser.Scene {
             key: 'idle',
             frames: [{key: 'PeefSide', frame: 0}],
         });
+
+        gloabalGameState.currentScene = this.scene.key;
         
     }
 
@@ -135,41 +138,45 @@ class DiningRoom extends Phaser.Scene {
             console.log("4");
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('stairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.doorRight)){
+        if (this.physics.overlap(this.p1, this.doorRight)){
             this.p1.x = 1535;
             this.scene.switch('livingRoom');
         }
 
-        if (this.checkCollision(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
+
+        if (this.physics.overlap(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("needleOne");
             this.needleOne.destroy();
         }
 
-        if (this.checkCollision(this.p1, this.rope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if (this.physics.overlap(this.p1, this.rope) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("rope");
             this.rope.destroy();
         }
 
-        if (this.checkCollision(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.needleOne) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.rope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.rope)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.needleOne)) {
+            if (this.physics.overlap(this.p1, this.needleOne)) {
                 this.line1.setText('Peef: Its a sewing needle. We often go through at least two of these fixing just one of us.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.rope)) {
+            if (this.physics.overlap(this.p1, this.rope)) {
                 this.line1.setText('Peef: Its a coil of rope. Its just strong enough to hold up a tiny climber like me.');
                 this.line2.setText('');
             }

@@ -31,6 +31,7 @@ class FishTankRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'fishTankRoom').setOrigin(0,0);
 
@@ -99,6 +100,8 @@ class FishTankRoom extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -122,12 +125,16 @@ class FishTankRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('stairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
+
+        if (this.physics.overlap(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("batteryTwo");
             this.battery.destroy();
         }
@@ -155,30 +162,30 @@ class FishTankRoom extends Phaser.Scene {
             
         }   
 
-        if (this.checkCollision(this.p1, this.talkSawtooth) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.talkSawtooth) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if (this.checkCollision(this.p1, this.talkTenticles) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.talkTenticles) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if (this.checkCollision(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.battery) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.talkSawtooth)) {
+            if (this.physics.overlap(this.p1, this.talkSawtooth)) {
                 this.line1.setText('Sawtooth: Hey there Peef. Any chance your gonna play Adventurer later?');
                 this.line2.setText('Peef: I will be sure to let you know when we play next. You like pretending to be my sword, huh?');
             }
 
-            if (this.checkCollision(this.p1, this.talkTenticles)) {
+            if (this.physics.overlap(this.p1, this.talkTenticles)) {
                 this.line1.setText('Tenitcles: Hey Peef. Thanks for the help with my flaps yesterday.');
                 this.line2.setText('Peef: Always happy to help a fellow stuffed animal. Even if they are a hand puppet octopus.');
             }
 
-            if (this.checkCollision(this.p1, this.battery)) {
+            if (this.physics.overlap(this.p1, this.battery)) {
                 this.line1.setText('Peef: Its a battery. It can power electronics.');
                 this.line2.setText('');
             }
@@ -215,7 +222,7 @@ class FishTankRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

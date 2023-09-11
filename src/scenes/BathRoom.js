@@ -28,10 +28,11 @@ class BathRoom extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        
-        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
+        this.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'bathroom').setOrigin(0,0);
 
@@ -53,16 +54,7 @@ class BathRoom extends Phaser.Scene {
         this.doorLeft.body.immovable = true;
         this.doorLeft.body.allowGravity = false;
 
-        //this.doorRight = this.physics.add.sprite(1585, 735, 'clearDoor');
-        //this.doorRight.body.immovable = true;
-        //this.doorRight.body.allowGravity = false;
-
-        //this.hammer = this.physics.add.sprite(700, 735, 'testItem');
-        
-        //this.stiches = this.physics.add.sprite(1400, 730, 'stiches');
-
-        //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
-        //this.goodLamb.setFlip(true, false);
+        // characters
 
         this.curie = this.physics.add.sprite(570, 741, 'curie');
         this.curie.body.immovable = true;
@@ -76,7 +68,8 @@ class BathRoom extends Phaser.Scene {
         this.celly.body.immovable = true;
         this.celly.body.allowGravity = false;
 
-        this. talkCount = 0;
+        this.talkCount = 0;
+        this.finished = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -102,6 +95,8 @@ class BathRoom extends Phaser.Scene {
             frames: [{key: 'PeefSide', frame: 0}],
         });
 
+        gloabalGameState.currentScene = this.scene.key;
+
     }
 
     update(){
@@ -125,80 +120,57 @@ class BathRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('hallWay');
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
         }
 
         if (this.talkCount == 2){
             doctorQuest = "active";
         }
 
-        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+        if (this.has("medBag") && this.has("stephascope") && this.has("shot") && doctorQuest == "active"){
             doctorQuest = "found";
         }
 
-        if (this.talkCount >= 4 && sewQuest == "found"){
+        if (this.talking == false && this.finished == true){
             doctorQuest = "complete";
         }   
         
         if (Phaser.Input.Keyboard.JustDown(this.keyG)){
+            console.log(this.p1.x + " " + this.p1.y);
             console.log(this.talking);
-            
         }   
 
-        //if (this.checkCollision(this.p1, this.doorRight)){
-        //    this.p1.x = 1535;
-        //    this.scene.switch('livingRoom');
-        //}
-
-        /*if (this.checkCollision(this.p1, this.ropeSpot) && Phaser.Input.Keyboard.JustDown(this.keyT)){
-            if (this.has("rope")){
-                this.takeOut("rope");
-                this.ropeSpot.destroy();
-                this.rope = this.physics.add.sprite(628, 420, 'ropeClimb');
-                this.rope.body.immovable = true;
-                this.rope.body.allowGravity = false;
-            }
-            
-        }*/
-
-           
-        
-        if (Phaser.Input.Keyboard.JustDown(this.keyG)){
-            console.log(this.talking);
-            
-        }   
-
-        //if (Phaser.Input.Keyboard.JustDown(this.keyV)){
-        //    inventory.splice(inventory.indexOf("spool"));
-        //}
-
-        if ((this.checkCollision(this.p1, this.curie) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.curie) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.celly) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.celly) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.bloody) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.bloody) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.sink) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.sink) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.tub) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
+        if ((this.physics.overlap(this.p1, this.tub) && Phaser.Input.Keyboard.JustDown(this.keyT))) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.bloody)) {
+            if (this.physics.overlap(this.p1, this.bloody)) {
                 if (doctorQuest == "inactive") {
                     this.line1.setText('Bloody: Hey Peef. Guess what? We are so close to reaching are dream of medicine practice. We just need a little more supplies.');
                     this.line2.setText('Peef: I have been happy to support your dream. And I am happy to help to.');
@@ -210,13 +182,14 @@ class BathRoom extends Phaser.Scene {
                 else if (doctorQuest == "found"){
                     this.line1.setText('Bloody: Thanks for the help. We will be helping everyone in the house soon enough.');
                     this.line2.setText('Peef: Have fun living the dream, doctors.');
+                    this.finished = true;
                 }
                 else if (doctorQuest == "complete"){
                     this.line1.setText('Peef: Hey Bloody. How is being a doctor working out?');
                     this.line2.setText('Bloody: Pretty good. Celly has to help me put it on, but I am getting really good at using the stephascope.');
                 }
             }
-            if (this.checkCollision(this.p1, this.curie)) {
+            if (this.physics.overlap(this.p1, this.curie)) {
                 if (doctorQuest == "inactive") {
                     this.line1.setText('Peef: Hey Curie. You and the cells still trying to become doctors?');
                     this.line2.setText('Curie: We sure are, Peef! We just need a few more supplies. We will be the best healers ever!');
@@ -228,13 +201,14 @@ class BathRoom extends Phaser.Scene {
                 else if (doctorQuest == "found"){
                     this.line1.setText('Curie: You got everything?! Thank you Peef! Dreams are coming true!');
                     this.line2.setText('Peef: Nice to see you so happy. Good luck doctors.');
+                    this.finished = true;
                 }
                 else if (doctorQuest == "complete"){
                     this.line1.setText('Curie: Hey Peef. Need a check up? I am happy help.');
                     this.line2.setText('Peef: I feel just fine, thank you. But you really do sound like a doctor, Curie.');
                 }
             }
-            if (this.checkCollision(this.p1, this.celly)) {
+            if (this.physics.overlap(this.p1, this.celly)) {
                 if (doctorQuest == "inactive") {
                     this.line1.setText('Peef: Hey Celly. I here you guys are getting close to becoming doctors.');
                     this.line2.setText('Celly: Yeah. We just need a med bag, a seringe, and a stephascope. Then we can set up shop.');
@@ -246,6 +220,7 @@ class BathRoom extends Phaser.Scene {
                 else if (doctorQuest == "found"){
                     this.line1.setText('Celly: Thats everything we need. Now we can set up our office.');
                     this.line2.setText('Peef: Plushies of a red blood cell, white blood cell, and a bottle of Covid vaccine working as doctors. Sure to be a success.');
+                    this.finished = true;
                 }
                 else if (doctorQuest == "complete"){
                     this.line1.setText('Celly: I do the lifting, while Curie and Bloody handle diagnosis and comfort patients. We are the perfect team.');
@@ -253,12 +228,12 @@ class BathRoom extends Phaser.Scene {
                 }
             }
 
-            if (this.checkCollision(this.p1, this.sink)) {
+            if (this.physics.overlap(this.p1, this.sink)) {
                 this.line1.setText('Peef: Its the sink. Even the biggest of us are too small reach it.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.tub)) {
+            if (this.physics.overlap(this.p1, this.tub)) {
                 this.line1.setText('Peef: Its the bath tub. Though only stuffed animal sea creatures can stand getting wet, almost everyone has ideas for it.');
                 this.line2.setText('');
             }
@@ -276,7 +251,7 @@ class BathRoom extends Phaser.Scene {
         if (this.talking == false){
             this.line1.setText('');
             this.line2.setText('');
-         }
+        }
 
     }
 
@@ -295,7 +270,7 @@ class BathRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;

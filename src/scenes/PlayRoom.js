@@ -40,6 +40,7 @@ class PlayRoom extends Phaser.Scene {
         this.keyT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.keyG = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
         this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
         this.bg = this.add.tileSprite(0,0, game.config.width, game.config.height, 'playRoom').setOrigin(0,0);
 
@@ -141,6 +142,7 @@ class PlayRoom extends Phaser.Scene {
         this.peefJR.body.allowGravity = false;
 
         this. talkCount = 0;
+        this.finished = false;
 
         this.p1 = this.physics.add.sprite(55, 730, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
@@ -167,6 +169,8 @@ class PlayRoom extends Phaser.Scene {
             key: 'idle',
             frames: [{key: 'PeefSide', frame: 0}],
         });
+
+        gloabalGameState.currentScene = this.scene.key;
 
     }
 
@@ -199,12 +203,16 @@ class PlayRoom extends Phaser.Scene {
             this.p1.body.setVelocityY(-500);
         }
 
-        if (this.checkCollision(this.p1, this.doorLeft)){
+        if (this.physics.overlap(this.p1, this.doorLeft)){
             this.p1.x = 55;
             this.scene.switch('upStairRoom');
         }
 
-        if (this.checkCollision(this.p1, this.medBag) && Phaser.Input.Keyboard.JustDown(this.keyR)){
+        if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
+            this.scene.switch('inventory');
+        }
+
+        if (this.physics.overlap(this.p1, this.medBag) && Phaser.Input.Keyboard.JustDown(this.keyR)){
             inventory.push("medBag");
             this.medBag.destroy();
         }
@@ -213,11 +221,11 @@ class PlayRoom extends Phaser.Scene {
             warQuest = "active";
         }
 
-        if (this.has("spool") && this.has("needleOne") && this.has("needleTwo") && sewQuest == "active"){
+        if (this.has("cards") && warQuest == "active"){
             warQuest = "found";
         }
 
-        if (this.talkCount >= 4 && sewQuest == "found"){
+        if (this.talking == false && this.finished == true){
             warQuest = "complete";
         }   
         
@@ -253,60 +261,60 @@ class PlayRoom extends Phaser.Scene {
         //    inventory.splice(inventory.indexOf("spool"));
         //}
 
-        if (this.checkCollision(this.p1, this.comander) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if (this.physics.overlap(this.p1, this.comander) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.peefJR)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.peefJR)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talkCount = this.talkCount + 1;
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.bigChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.bigChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.miniChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.miniChest)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
-        if ((this.checkCollision(this.p1, this.boardGame)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
-            this.talking = !this.talking;
-        }
-
-        if ((this.checkCollision(this.p1, this.dictionary)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.boardGame)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.greenBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.dictionary)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.redBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.greenBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.purpleBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.redBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.legoCar)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.purpleBook)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.legoCastle)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.legoCar)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
-        if ((this.checkCollision(this.p1, this.medBag)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+        if ((this.physics.overlap(this.p1, this.legoCastle)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
+            this.talking = !this.talking;
+        }
+
+        if ((this.physics.overlap(this.p1, this.medBag)) && Phaser.Input.Keyboard.JustDown(this.keyT)) {
             this.talking = !this.talking;
         }
 
         if (this.talking == true){
-            if (this.checkCollision(this.p1, this.comander)) {
+            if (this.physics.overlap(this.p1, this.comander)) {
                 if (warQuest == "inactive") {
                     this.line1.setText('Comander: At ease, General. I am going to teach JR here how to play War. Can you help find the supplies?');
-                    this.line2.setText('Peef: Uh, sure . . . We do not have guns in this house, right?');
+                    this.line2.setText('Peef: Uh, sure . . . We do not have weapons in this house, right?');
                 }
                 else if (warQuest == "active") {
                     this.line1.setText('Comander: Have you found the war supplies yet, general?');
@@ -315,6 +323,7 @@ class PlayRoom extends Phaser.Scene {
                 else if (warQuest == "found"){
                     this.line1.setText('Comander: Thank you, General. Now then, soldier, you start the game with . . .');
                     this.line2.setText('Peef: Thank goodness, you just ment the card game. Remember to have fun, Comander.');
+                    this.finished = true;
                 }
                 else if (warQuest == "complete"){
                     this.line1.setText('Comander: Greetings, General. JR is doing great in this game. You teach him well.');
@@ -322,7 +331,7 @@ class PlayRoom extends Phaser.Scene {
                 }
             }
 
-            if (this.checkCollision(this.p1, this.peefJR)) {
+            if (this.physics.overlap(this.p1, this.peefJR)) {
                 if (warQuest == "inactive") {
                     this.line1.setText('Peef JR: Hey Peef. Comander says he is going to teach me to play war. Thats a harmless game, right?');
                     this.line2.setText('Peef: Do not worry, I am pretty sure he does not want to hurt you. He probably wants me to get him supplies.');
@@ -334,6 +343,7 @@ class PlayRoom extends Phaser.Scene {
                 else if (warQuest == "found"){
                     this.line1.setText('Peef Jr: So war is just a card game. whew! I was getting worried, *hugs Peef* ');
                     this.line2.setText('Peef: There there, JR. Its all okay. Now go have fun!');
+                    this.finished = true;
                 }
                 else if (warQuest == "complete"){
                     this.line1.setText('Peef JR: This is actually kinda fun. But for some reason, Comander keeps calling me soldier.');
@@ -341,52 +351,52 @@ class PlayRoom extends Phaser.Scene {
                 }
             }
 
-            if (this.checkCollision(this.p1, this.bigChest)) {
+            if (this.physics.overlap(this.p1, this.bigChest)) {
                 this.line1.setText('Peef : Its a huge toy chest. Mostly some RC cars and action figures, none of which are alive like us.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.miniChest)) {
+            if (this.physics.overlap(this.p1, this.miniChest)) {
                 this.line1.setText('Peef : Its a small toy chest. Its full of used lego set instructions.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.boardGame)) {
+            if (this.physics.overlap(this.p1, this.boardGame)) {
                 this.line1.setText('Peef : Its a stack of boardgames. Theres Shoots & Ladders, Candyland, and some unknown game in a metal box.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.dictionary)) {
+            if (this.physics.overlap(this.p1, this.dictionary)) {
                 this.line1.setText('Peef : Its a bunch of dictionaries. Only Smarty actually reads these for fun.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.greenBook)) {
+            if (this.physics.overlap(this.p1, this.greenBook)) {
                 this.line1.setText('Peef : This green book is my favorite. It tells of how I was made by Santa Claus.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.redBook)) {
+            if (this.physics.overlap(this.p1, this.redBook)) {
                 this.line1.setText('Peef : Its a red picture book. It tells a story about lost bunny rabbits.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.purpleBook)) {
+            if (this.physics.overlap(this.p1, this.purpleBook)) {
                 this.line1.setText('Peef : Its a purple story book. It has three different fairy tails.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.legoCar)) {
+            if (this.physics.overlap(this.p1, this.legoCar)) {
                 this.line1.setText('Peef : Its a lego set of a car.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.legoCastle)) {
+            if (this.physics.overlap(this.p1, this.legoCastle)) {
                 this.line1.setText('Peef : Its a lego set of a castle.');
                 this.line2.setText('');
             }
 
-            if (this.checkCollision(this.p1, this.medBag)) {
+            if (this.physics.overlap(this.p1, this.medBag)) {
                 this.line1.setText('Peef : Its a toy doctors bag. Its full of sealed bottles of plastic pills.');
                 this.line2.setText('');
             }
@@ -423,7 +433,7 @@ class PlayRoom extends Phaser.Scene {
 
     collect(item) {
         this.space = 0;
-        while (this.space < 10){
+        while (this.space < 18){
             if (inventory[this.space] == null){
                 inventory[this.space] == item;
                 break;
