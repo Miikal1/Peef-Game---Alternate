@@ -15,6 +15,8 @@ class BedRoomDay2 extends Phaser.Scene {
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('testItem', "assets/testItem.png");
+        this.load.image('blackScreen', "assets/blackScreen.png");
+        this.load.image('day1', "assets/day1.png");
 
     }    
 
@@ -78,9 +80,8 @@ class BedRoomDay2 extends Phaser.Scene {
         this.scally.body.immovable = true;
         this.scally.body.allowGravity = false;
 
-        this.p1 = this.physics.add.sprite(1300, 730, 'PeefSide');
+        this.p1 = this.physics.add.sprite(300, 502, 'PeefSide');
         this.p1.setCollideWorldBounds(true);
-        this.p1.setFlip(true, false);
 
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.box);
@@ -89,7 +90,20 @@ class BedRoomDay2 extends Phaser.Scene {
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
 
+        this.blackFade = this.physics.add.sprite(800, 450, 'blackScreen');
+        this.blackFade.body.immovable = true;
+        this.blackFade.body.allowGravity = false;
+        this.blackFade.setAlpha(1);
+        this.tweens.add({
+            targets: this.blackFade,
+            alpha: 0,
+            duration: 4000,
+            repeat: 0
+        });
+
         this.talking = false;
+
+        this.dayComplete = false;
 
         this.anims.create({
             key: 'walk',
@@ -146,6 +160,10 @@ class BedRoomDay2 extends Phaser.Scene {
 
         if(Phaser.Input.Keyboard.JustDown(this.keyQ)) {
             this.scene.switch('inventoryDay2');
+        }
+
+        if (pickingQuest == "complete" && squeezeQuest == "complete" && deliveryQuest == "complete" && safeQuest == "complete" && fishFoodQuest == "complete" && towerQuest == "complete"){
+            this.dayComplete = true;
         }
 
         //if (this.checkCollision(this.p1, this.doorRight)){

@@ -15,6 +15,8 @@ class BedRoomDay1 extends Phaser.Scene {
         this.load.image('clearDoor', "assets/clearDoor.png");
         this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('testItem', "assets/testItem.png");
+        this.load.image('blackScreen', "assets/blackScreen.png");
+        this.load.image('day1', "assets/day1.png");
 
     }    
 
@@ -74,7 +76,7 @@ class BedRoomDay1 extends Phaser.Scene {
         //this.goodLamb = this.physics.add.sprite(1460, 730, 'goodLamb');
         //this.goodLamb.setFlip(true, false);
 
-        this.scally = this.physics.add.sprite(120, 492, 'scally');
+        this.scally = this.physics.add.sprite(120, 498, 'scally');
         this.scally.body.immovable = true;
         this.scally.body.allowGravity = false;
 
@@ -89,7 +91,14 @@ class BedRoomDay1 extends Phaser.Scene {
         this.line1 = this.add.text(880, 790, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
         this.line2 = this.add.text(880, 840, ' ', { font: '20px Futura', fill: '#FFFFFF' }).setOrigin(0.5);
 
+        this.blackFade = this.physics.add.sprite(800, 450, 'blackScreen');
+        this.blackFade.body.immovable = true;
+        this.blackFade.body.allowGravity = false;
+        this.blackFade.setAlpha(0);
+
         this.talking = false;
+
+        this.dayComplete = false;
 
         this.anims.create({
             key: 'walk',
@@ -148,6 +157,10 @@ class BedRoomDay1 extends Phaser.Scene {
             this.scene.switch('inventoryDay1');
         }
 
+        if (sewQuest == "complete" && tvQuest == "complete" && warQuest == "complete" && doctorQuest == "complete"){
+            this.dayComplete = true;
+        }
+
         //if (this.checkCollision(this.p1, this.doorRight)){
         //    this.p1.x = 1535;
         //    this.scene.switch('livingRoom');
@@ -180,12 +193,27 @@ class BedRoomDay1 extends Phaser.Scene {
         }
 
         if (this.talking == true){
-            if (this.physics.overlap(this.p1, this.scally)) {
+            if (this.physics.overlap(this.p1, this.scally) && this.dayComplete == false) {
                 this.line1.setText('Scally: Having a good day Peef? I am here if you need to rest your head.');
                 this.line2.setText('Peef: Thanks for the offer Scally, but I still got plenty to do today.');
             }
+            else if (this.physics.overlap(this.p1, this.scally) && this.dayComplete == true) {
+                this.line1.setText('Scally: Its been a long day Peef. Ready to hit the hay?');
+                this.line2.setText('Press R for: Yeah I am ready to sleep. or Press T for: Naw, I am gonna stay up a bit more.');
+                if (Phaser.Input.Keyboard.JustDown(this.keyR)) {
+                    this.tweens.add({
+                        targets: this.blackFade,
+                        alpha: 2,
+                        duration: 8000,
+                        onComplete: () => {
+                          this.scene.switch('bedRoomDay2');
+                        },
+                        repeat: 0
+                    });
+                }
+            }
 
-            if (this.keyA.isDown || this.keyD.isDown) {
+            if ((this.keyA.isDown || this.keyD.isDown) && this.dayComplete == false) {
                 this.p1.setVelocityX(0);
             }
             if(this.p1.body.touching.down && Phaser.Input.Keyboard.JustDown(this.keyW)) {
@@ -254,6 +282,10 @@ class BedRoomDay1 extends Phaser.Scene {
                 this.space += 1;
             }
         }
+    }
+
+    fadeToBlack(){
+
     }
 
 }

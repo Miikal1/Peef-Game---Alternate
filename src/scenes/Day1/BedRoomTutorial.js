@@ -17,6 +17,7 @@ class BedRoomTutorial extends Phaser.Scene {
         this.load.image('sideDoor', "assets/sideDoor.png");
         this.load.image('testItem', "assets/testItem.png");
         this.load.image('key', "assets/key.png");
+        this.load.image('day1', "assets/day1.png");
 
     }    
 

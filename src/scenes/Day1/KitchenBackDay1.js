@@ -205,8 +205,8 @@ class KitchenBackDay1 extends Phaser.Scene {
             }
 
             if (this.physics.overlap(this.p1, this.drawerMidLeft)) {
-                this.line1.setText('Peef: This drawer is full of cleaning stuff. Dish soup, stain remover, and stain remover instructions. We ');
-                this.line2.setText('Peef: We have to be extra careful not to destroy ourselves.');
+                this.line1.setText('Peef: This drawer is full of cleaning stuff. Dish soup, stain remover, and stain remover instructions.');
+                this.line2.setText('Peef: We have to be extra careful with that stuff so we destroy ourselves.');
             }
 
             if (this.physics.overlap(this.p1, this.drawerMidRight)) {
